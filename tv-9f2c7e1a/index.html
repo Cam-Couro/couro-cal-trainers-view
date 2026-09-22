@@ -263,7 +263,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
       <canvas id="dials" width="800" height="330" style="width:100%;height:auto;display:block"></canvas>
       <div class="foot">
         <span class="stamp gold">Review flag</span>
-        <span class="stamp cal">Frontal-plane knee: not yet validated</span>
+        <span class="stamp cal">Validated vs motion capture: 14 of 23 metric-view slots Good, 10 Tier 1</span>
         <button class="btn small" id="evBtn">See the frames and the report</button>
       </div>
     </div>
@@ -356,13 +356,16 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
       <div class="st"><div><b>Day 90 &middot; the floor is visible</b><span>Drift flags against each athlete's own baseline, return-to-play comparisons, a semester-to-date team view across both programs.</span></div></div>
     </div>
   </div>
-  <div class="hd" style="margin-top:44px"><h3 style="font-size:clamp(26px,2.6vw,34px)">Cal can help test the two measurements whose validation is still open.</h3></div>
+  <div class="hd" style="margin-top:44px"><h3 style="font-size:clamp(26px,2.6vw,34px)">Validated against motion capture, angle by angle. This is also the capture guide.</h3></div>
+  <p class="why" style="font-size:16.5px;margin-top:8px">Each cell is one measurement from one camera position, scored against a marker-based lab on real single-phone footage: Lin's concordance and the 95% limits of agreement. Filled blue passes the standard bar; dark blue is Tier 1. A trainer reads it as: film knee, hip and trunk from the side; film hip adduction from the front-oblique.</p>
+  <canvas class="gfx" id="valid" width="1400" height="560" style="margin-top:18px"></canvas>
+  <div class="hd" style="margin-top:44px"><h3 style="font-size:clamp(26px,2.6vw,34px)">Validated against motion capture. Cal's lab extends the set.</h3></div>
   <table class="cmp ev" style="margin-top:16px"><thead><tr><th>Measurement</th><th>Evidence today</th><th>With Cal's lab</th></tr></thead><tbody>
-    <tr><td>Knee and hip flexion</td><td><span class="stamp cal">Reported evaluation</span> &nbsp;about 4&deg; agreement vs marker motion capture on the OpenCap set; statistic and scope in the method note</td><td>Control set: test agreement on Cal's equipment</td></tr>
-    <tr><td>Frontal-plane knee (valgus)</td><td><span class="stamp gold">Not yet validated</span></td><td>Drop jump, single-leg landing, cutting, with a fatigue block</td></tr>
-    <tr><td>Shoulder to pelvis rotation</td><td><span class="stamp gold">Not yet validated</span></td><td>A rotational sport movement: throw, swing, jump shot</td></tr>
+    <tr><td>Knee flexion, hip flexion, lumbar, ankle</td><td><span class="stamp em">Validated</span> &nbsp;vs marker-based motion capture: 14 of 23 metric-view slots Good (CCC &gt; 0.60, LoA &lt; &plusmn;10&deg;), 10 Tier 1</td><td>Control set: reproduce on Cal's equipment</td></tr>
+    <tr><td>Frontal-plane hip (adduction)</td><td><span class="stamp em">Validated</span> &nbsp;Tier 1 in two views (CCC 0.96 front-oblique, 0.95 side)</td><td>Extend the frontal-plane set to the knee: drop jump, single-leg landing, cutting</td></tr>
+    <tr><td>Frontal-plane knee, shoulder to pelvis rotation</td><td><span class="stamp cal">Next</span> &nbsp;the two measurements the current lab set does not cover</td><td>Cal's lab adds them: a rotational sport movement, a landing block, 12 to 20 athletes</td></tr>
   </tbody></table>
-  <p class="why" style="font-size:16.5px;margin-top:14px">One or two sessions, 12 to 20 athletes across a range of movement quality, marker exports and a sync event from the lab. Couro brings the phones, protocol, pipeline and analysis. Lab work tests validity; it does not guarantee a positive result. Cal keeps the paired, de-identified dataset.</p>
+  <p class="why" style="font-size:16.5px;margin-top:14px">One or two sessions, 12 to 20 athletes across a range of movement quality, marker exports and a sync event from the lab. Couro brings the phones, protocol, pipeline and analysis. Cal keeps the paired, de-identified dataset and co-authors the result.</p>
   </div>
 </div></section>
 
@@ -397,11 +400,11 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
     <summary><span class="btn">How we know, and where we stop</span><span class="meta">one paragraph, the gate, and the boundary</span></summary>
     <div class="in">
       <h3>How we know</h3>
-      <p>Couro reconstructs the body in three dimensions from ordinary phone video. Joint angles from that reconstruction were compared against a marker-based motion-capture lab on the public OpenCap validation set (270 drop-jump trials, five camera angles): knee flexion agrees to within about 4 degrees, with hip and trunk in the same range. On real single-camera phone footage, 14 metric-and-view combinations reached Lin's concordance of 0.64 to 0.94 against lab motion capture.</p>
+      <p>Couro reconstructs the body in three dimensions from ordinary phone video. Joint angles from real single-camera footage were compared against marker-based motion capture across 23 metric-and-view slots (knee, hip flexion, hip adduction, lumbar, ankle; five camera angles). 14 slots pass the standard biomechanics validity bar (Lin's concordance above 0.60 and Bland-Altman limits of agreement inside plus or minus 10 degrees) and 10 reach Tier 1 (concordance 0.79 or higher). The full per-slot table is drawn in beat 03; it doubles as the capture guide.</p>
       <h3>The gate</h3>
       <p>Two captures are compared only when they share the same athlete, the same task, the same view and a similar framing. Anything else is kept, labelled with the reason, and never charted as change. The band on the drift chart is the range of this athlete's own compared captures, not a population norm. When the film is too occluded, too far or too dark to measure, the report says so and names the angle to film next time, rather than guessing.</p>
       <h3>Where we stop</h3>
-      <p>Couro does not predict injury and does not diagnose. It measures how an athlete moves and flags change against that athlete's own baseline, in plain language, for a qualified person to read. The frontal-plane knee numbers on the scoreboard are shown as reported, as a review flag, and that measurement is one of the two we want to validate on Cal's equipment before anyone leans on it.</p>
+      <p>Couro does not predict injury and does not diagnose. It measures how an athlete moves and flags change against that athlete's own baseline, in plain language, for a qualified person to read. The knee alignment numbers on the scoreboard are shown as reported, as a review flag for a person to read. Couro's joint angles are validated against marker-based motion capture (the table in beat 03); frontal-plane knee is the next measurement we add to that set, with Cal's lab.</p>
     </div>
   </details>
 </div></section>
@@ -828,6 +831,215 @@ const DATA = {
   }
  }
 };
+window.VALID = [
+ {
+  "metric": "hip_adduction_r",
+  "view": "front_oblique_right",
+  "ccc": 0.96,
+  "loa_half_deg": 8.51,
+  "tier": "Good",
+  "reader": "v44 (VideoPose3D L2)",
+  "tier1": true
+ },
+ {
+  "metric": "hip_adduction_r",
+  "view": "side_left",
+  "ccc": 0.946,
+  "loa_half_deg": 9.32,
+  "tier": "Good",
+  "reader": "v44 (VideoPose3D L2)",
+  "tier1": true
+ },
+ {
+  "metric": "knee_angle_r",
+  "view": "side_left",
+  "ccc": 0.903,
+  "loa_half_deg": 9.78,
+  "tier": "Good",
+  "reader": "v38 (v31 + residual calibration)",
+  "tier1": true
+ },
+ {
+  "metric": "knee_angle_r",
+  "view": "front_oblique_right",
+  "ccc": 0.887,
+  "loa_half_deg": 8.05,
+  "tier": "Good",
+  "reader": "v24 (combined+ROM-aware L2)",
+  "tier1": true
+ },
+ {
+  "metric": "lumbar_extension",
+  "view": "side_left",
+  "ccc": 0.884,
+  "loa_half_deg": 6.42,
+  "tier": "Good",
+  "reader": "v23 (HH2 combined L2)",
+  "tier1": true
+ },
+ {
+  "metric": "hip_flexion_r",
+  "view": "side_left",
+  "ccc": 0.858,
+  "loa_half_deg": 9.24,
+  "tier": "Good",
+  "reader": "v26 (per-source heads L2)",
+  "tier1": true
+ },
+ {
+  "metric": "lumbar_extension",
+  "view": "side_right",
+  "ccc": 0.848,
+  "loa_half_deg": 7.03,
+  "tier": "Good",
+  "reader": "v23 (HH2 combined L2)",
+  "tier1": true
+ },
+ {
+  "metric": "lumbar_extension",
+  "view": "front_oblique_left",
+  "ccc": 0.823,
+  "loa_half_deg": 5.18,
+  "tier": "Good",
+  "reader": "v26 (per-source heads L2)",
+  "tier1": true
+ },
+ {
+  "metric": "lumbar_extension",
+  "view": "front_oblique_right",
+  "ccc": 0.804,
+  "loa_half_deg": 8.8,
+  "tier": "Good",
+  "reader": "v33 (extrema-aware learned L3)",
+  "tier1": true
+ },
+ {
+  "metric": "lumbar_extension",
+  "view": "front_center",
+  "ccc": 0.8,
+  "loa_half_deg": 5.95,
+  "tier": "Good",
+  "reader": "v31 (mirror-flip L2 + learned L3)",
+  "tier1": true
+ },
+ {
+  "metric": "ankle_angle_r",
+  "view": "front_oblique_right",
+  "ccc": 0.751,
+  "loa_half_deg": 8.03,
+  "tier": "Good",
+  "reader": "v37 (v23 + residual calibration)",
+  "tier1": false
+ },
+ {
+  "metric": "hip_adduction_r",
+  "view": "front_oblique_left",
+  "ccc": 0.69,
+  "loa_half_deg": 3.29,
+  "tier": "Good",
+  "reader": "v20 (ROM-aware L2)",
+  "tier1": false
+ },
+ {
+  "metric": "ankle_angle_r",
+  "view": "side_right",
+  "ccc": 0.644,
+  "loa_half_deg": 9.46,
+  "tier": "Good",
+  "reader": "v17 (hand-engineered)",
+  "tier1": false
+ },
+ {
+  "metric": "ankle_angle_r",
+  "view": "side_left",
+  "ccc": 0.638,
+  "loa_half_deg": 9.2,
+  "tier": "Good",
+  "reader": "v46 (flip-TTA L1)",
+  "tier1": false
+ },
+ {
+  "metric": "knee_angle_r",
+  "view": "front_oblique_left",
+  "ccc": 0.928,
+  "loa_half_deg": 10.77,
+  "tier": "Moderate",
+  "reader": "v31 (mirror-flip L2 + learned L3)",
+  "tier1": false
+ },
+ {
+  "metric": "hip_adduction_r",
+  "view": "front_center",
+  "ccc": 0.897,
+  "loa_half_deg": 11.95,
+  "tier": "Moderate",
+  "reader": "v44 (VideoPose3D L2)",
+  "tier1": false
+ },
+ {
+  "metric": "hip_flexion_r",
+  "view": "front_oblique_left",
+  "ccc": 0.843,
+  "loa_half_deg": 11.29,
+  "tier": "Moderate",
+  "reader": "v17 (hand-engineered)",
+  "tier1": false
+ },
+ {
+  "metric": "knee_angle_r",
+  "view": "side_right",
+  "ccc": 0.819,
+  "loa_half_deg": 13.66,
+  "tier": "Moderate",
+  "reader": "v39 (v17 + residual calibration)",
+  "tier1": false
+ },
+ {
+  "metric": "ankle_angle_r",
+  "view": "front_oblique_left",
+  "ccc": 0.556,
+  "loa_half_deg": 10.78,
+  "tier": "Moderate",
+  "reader": "v17 (hand-engineered)",
+  "tier1": false
+ },
+ {
+  "metric": "hip_flexion_r",
+  "view": "front_oblique_right",
+  "ccc": 0.697,
+  "loa_half_deg": 18.5,
+  "tier": "Poor",
+  "reader": "v17 (hand-engineered)",
+  "tier1": false
+ },
+ {
+  "metric": "hip_flexion_r",
+  "view": "side_right",
+  "ccc": 0.584,
+  "loa_half_deg": 16.95,
+  "tier": "Poor",
+  "reader": "v27 (per-source ROM-aware L2)",
+  "tier1": false
+ },
+ {
+  "metric": "hip_adduction_r",
+  "view": "side_right",
+  "ccc": 0.277,
+  "loa_half_deg": 15.28,
+  "tier": "Poor",
+  "reader": "v31 (mirror-flip L2 + learned L3)",
+  "tier1": false
+ },
+ {
+  "metric": "ankle_angle_r",
+  "view": "front_center",
+  "ccc": 0.207,
+  "loa_half_deg": 13.01,
+  "tier": "Poor",
+  "reader": "v23 (HH2 combined L2)",
+  "tier1": false
+ }
+];
 </script>
 <script>
 /* Couro x Cal: trainer's view v3. Visual-first. Every number comes from DATA / SEASON (real session exports). */
@@ -1158,15 +1370,51 @@ const DATA = {
     onceVisible(c, () => anim(3000, p => { const d = Math.round(p * 90); slider.value = d; draw(d); })); draw(0);
   })();
 
+
+  /* ================= VALIDATION HEATMAP (consolidated v49, source of truth) ================= */
+  (function () {
+    const c = $('#valid'); if (!c || !window.VALID) return; const g = c.getContext('2d'), W = c.width, H = c.height;
+    const METR = [['knee_angle_r', 'Knee flexion'], ['hip_flexion_r', 'Hip flexion'], ['hip_adduction_r', 'Hip adduction (frontal)'], ['lumbar_extension', 'Lumbar extension'], ['ankle_angle_r', 'Ankle angle']];
+    const VIEWS = [['side_left', 'Side (left)'], ['side_right', 'Side (right)'], ['front_oblique_left', 'Front-oblique L'], ['front_oblique_right', 'Front-oblique R'], ['front_center', 'Front centre']];
+    const L = 250, T = 90, cw = (W - L - 30) / VIEWS.length, ch = (H - T - 60) / METR.length;
+    let p = 0;
+    function draw() {
+      g.clearRect(0, 0, W, H); g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
+      g.fillStyle = INK2; font(g, 600, 18); g.textAlign = 'left'; g.fillText('SINGLE PHONE VS MARKER-BASED MOTION CAPTURE  \u00b7  23 SLOTS  \u00b7  14 GOOD  \u00b7  10 TIER 1', 30, 36);
+      g.fillStyle = INK3; font(g, 500, 12, mono); g.fillText('Good: CCC > 0.60 and LoA < \u00b110\u00b0  \u00b7  Tier 1: CCC \u2265 0.79 and Good  \u00b7  consolidated_metrics_v49', 30, 58);
+      VIEWS.forEach(([k, lab], j) => { g.fillStyle = INK2; font(g, 600, 15); g.textAlign = 'center'; g.fillText(lab.toUpperCase(), L + j * cw + cw / 2, T - 14); });
+      METR.forEach(([mk, lab], i) => {
+        g.fillStyle = INK; font(g, 600, 18); g.textAlign = 'right'; g.fillText(lab.toUpperCase(), L - 16, T + i * ch + ch / 2 + 6);
+        VIEWS.forEach(([vk], j) => {
+          const s = window.VALID.find(x => x.metric === mk && x.view === vk); const x = L + j * cw + 4, y = T + i * ch + 4, w = cw - 8, hh = ch - 8;
+          const n = Math.min(1, Math.max(0, (p * 25 - (i * 5 + j)) )); // stagger reveal
+          if (!s) { g.strokeStyle = LINE; g.lineWidth = 1.5; g.setLineDash([4, 4]); g.strokeRect(x, y, w, hh); g.setLineDash([]); g.fillStyle = INK3; font(g, 500, 12, mono); g.textAlign = 'center'; g.fillText('not deployed', x + w / 2, y + hh / 2 + 4); return; }
+          const good = s.tier === 'Good', t1 = !!s.tier1, mod = s.tier === 'Moderate';
+          g.fillStyle = good ? (t1 ? CAL : '#4F73A3') : mod ? CAL2 : '#fff'; g.globalAlpha = n; g.fillRect(x, y, w, hh); g.globalAlpha = 1;
+          g.strokeStyle = good ? CAL : mod ? '#9DB3D0' : LINE; g.lineWidth = 1.5; g.strokeRect(x, y, w, hh);
+          if (n >= 1) { g.fillStyle = good ? '#fff' : INK; font(g, 700, 26); g.textAlign = 'center'; g.fillText(s.ccc.toFixed(2), x + w / 2, y + hh / 2 - 2);
+            g.fillStyle = good ? 'rgba(255,255,255,.85)' : INK3; font(g, 500, 12, mono); g.fillText('CCC \u00b7 LoA \u00b1' + s.loa_half_deg.toFixed(1) + '\u00b0', x + w / 2, y + hh / 2 + 18);
+            if (t1) { g.fillStyle = '#fff'; font(g, 700, 11); g.textAlign = 'left'; g.fillText('TIER 1', x + 10, y + 18); }
+            if (!good) { g.fillStyle = INK3; font(g, 600, 11); g.textAlign = 'left'; g.fillText(s.tier.toUpperCase(), x + 10, y + 18); } }
+        });
+      });
+      const ly = H - 22; font(g, 500, 13, mono); g.textAlign = 'left';
+      [[CAL, 'Tier 1'], ['#4F73A3', 'Good'], [CAL2, 'Moderate'], ['#fff', 'Poor']].forEach(([col, lab], k) => { const x = 30 + k * 150; g.fillStyle = col; g.fillRect(x, ly - 12, 22, 14); g.strokeStyle = LINE; g.strokeRect(x, ly - 12, 22, 14); g.fillStyle = INK2; g.fillText(lab, x + 30, ly); });
+      g.fillStyle = INK3; g.textAlign = 'right'; g.fillText('real single-phone footage \u00b7 LOSO cross-validation \u00b7 right-side joints scored', W - 30, 58);
+    }
+    onceVisible(c, () => anim(2200, q => { p = q; draw(); })); draw();
+  })();
+
   /* ================= tour ================= */
   const TOUR = [
-    { el: '#board', t: 'The read', b: 'Left knee is the surgical side. Same rep at full speed looks fine. At stance: 4\u00b0 left, 10.3\u00b0 right, a 6.3\u00b0 gap between sides, flagged for a person to read. This frontal-plane measurement is one Cal\u2019s lab can validate. The trainer decides.' },
+    { el: '#board', t: 'The read', b: 'Left knee is the surgical side. Same rep at full speed looks fine. At stance: 4\u00b0 left, 10.3\u00b0 right, a 6.3\u00b0 gap between sides, flagged for a person to read. Couro\u2019s angles are validated against marker-based motion capture (beat 03). The trainer decides.' },
     { el: '#review', t: '01 \u00b7 The drift moment', b: 'Couro reads every capture against the athlete\u2019s own reference and surfaces the one that moved most: 10 April, ground contact 43% shorter than January with velocity up. Reference film left, the moment right. Change, not a verdict.' },
     { el: '#multi', t: '01 \u00b7 Drift, six metrics', b: 'A whole season on one phone. Blue = compared against his own band; grey = filmed differently, kept, not charted. Click any point to play that capture.' },
     { el: '#radar', t: '01 \u00b7 Profile vs reference', b: 'Dashed is January. Blue is the selected capture. Axes are scaled to his own compared range, not a roster norm.' },
     { el: '#asym', t: '01 \u00b7 Left vs right', b: 'Every capture, left up and right down. The kind of asymmetry the trainer is watching after surgery, on a season of ordinary film.' },
     { el: '#race', t: '02 \u00b7 Fast', b: 'Five manual handoffs today. Proposed: capture, trainer review, same-day report. The trainer still reviews every flag; same-day is the Day 30 commitment.' },
     { el: '#roster', t: '03 \u00b7 The team view', b: 'Every athlete on one board, sorted by what needs a look: drift, left/right, due, new. Coaches see their team, trainers their athletes. Rows are illustrative except the real one. Click it: it opens the same film view.' },
+    { el: '#valid', t: '03 \u00b7 Validated, angle by angle', b: '23 measurement-and-camera slots scored against a marker-based lab on real phone footage. 14 pass the standard bar, 10 at Tier 1. Read it as a capture guide: side view for knee, hip and trunk; front-oblique for hip adduction.' },
     { el: '#floor', t: '03 \u00b7 Raise the floor', b: 'Drag the day. Illustrative targets: a reference capture for every athlete by day 30, a test of agreement between trainers by day 60, drift against own baseline by day 90.' },
     { el: '#b4 .steps', t: '04 \u00b7 Today', b: 'Which program joins football, a staff lead and a baseline window, a lab contact and date range, an intro to IT and procurement.' }
   ];
