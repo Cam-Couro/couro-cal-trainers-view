@@ -262,7 +262,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
 
   <div class="index">
     <a href="#b1"><b>01</b><span>Drift, profile, left vs right</span></a>
-    <a href="#b2"><b>02</b><span>Fast: five steps by hand to zero</span></a>
+    <a href="#b2"><b>02</b><span>Fast: one review workflow</span></a>
     <a href="#b3"><b>03</b><span>Raise the floor for 200 athletes</span></a>
     <a href="#b4"><b>04</b><span>What we decide today</span></a>
   </div>
@@ -272,7 +272,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
 <section class="beat" id="b1"><div class="wrap">
   <div class="eyebrow"><b>01</b> Drift &middot; one athlete &middot; 14 captures &middot; 15 Jan to 1 May 2025 &middot; one phone</div>
   <div class="hd"><h2>Six metrics, a whole season, against his own January reference.</h2></div>
-  <p class="why">Blue is compared: same view, near framing, same sprint. Grey was filmed differently, so it is kept and labelled, never charted as change. Gold band: his own compared range. Click any point to play that capture.</p>
+  <p class="why">Only blue captures enter the comparison: same view, near framing, same sprint. Grey captures were filmed differently and sit on their own rail, kept and clickable. Separate scales per chart; the gold band is the observed range of the five compared captures, not a target. Click any point to play that capture.</p>
   <div class="multi" id="multi"></div>
   <div class="stage" style="grid-template-columns:minmax(300px,520px) 1fr;margin-top:26px">
     <div>
@@ -296,27 +296,27 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
 <!-- 02 FAST -->
 <section class="beat" id="b2"><div class="wrap">
   <div class="eyebrow"><b>02</b> Fast &middot; what changes on the training-room floor</div>
-  <div class="hd"><h2>Five steps by hand today. Zero with Couro.</h2></div>
-  <p class="why">No uploads, no new tab, nothing for an assistant coach to re-key. The report lands in the AMS where staff already look, already compared to that athlete's reference.</p>
+  <div class="hd"><h2>From five manual handoffs to one review workflow.</h2></div>
+  <p class="why">No uploads, no new tab, nothing for an assistant coach to re-key. Proposed: capture, trainer review, same-day report in the destination Cal chooses, already compared to that athlete's reference.</p>
   <canvas class="gfx" id="race" width="1400" height="260" style="margin-top:26px"></canvas>
 </div></section>
 
 <!-- 03 RAISE THE FLOOR -->
 <section class="beat" id="b3"><div class="wrap">
   <div class="eyebrow"><b>03</b> Raise the floor &middot; 200 athletes &middot; the same read from every trainer</div>
-  <div class="hd"><h2>Two trainers, one athlete, one day: the same flags, the same next action.</h2></div>
+  <div class="hd"><h2>One protocol, every trainer: a reference capture for all 200, then a test of agreement between trainers.</h2></div>
   <p class="why">Today the baseline is whoever's holding the phone. One protocol in the app: every athlete on both programs gets a reference capture in 30 days, and every trainer scores the same one. Drag the day.</p>
   <div class="raise">
     <div><canvas class="gfx" id="floor" width="1200" height="700"></canvas><div class="scrub" style="margin-top:10px"><input type="range" id="floorDay" min="0" max="90" value="0" step="1" aria-label="Day"></div><div class="legend" style="margin-top:2px"><span class="mono" style="color:var(--ink3)">drag: <b id="floorLab" style="color:var(--ink)">Day 0</b> &rarr; Day 30 captured once &rarr; Day 60 same read &rarr; Day 90 team view</span></div></div>
     <div class="steps blue">
       <div class="st"><div><b>Day 30 &middot; the standard exists</b><span>Every rostered athlete captured once in reps your staff already run. The check: pick any athlete, their baseline report is there, back the day it was filmed.</span></div></div>
-      <div class="st"><div><b>Day 60 &middot; every trainer reads the same page</b><span>Two staff members capture the same athlete on the same day and get the same read, inside the normal rep-to-rep range.</span></div></div>
+      <div class="st"><div><b>Day 60 &middot; test agreement between trainers</b><span>Two staff members capture the same athlete on the same day using the same protocol; the two reports go side by side.</span></div></div>
       <div class="st"><div><b>Day 90 &middot; the floor is visible</b><span>Drift flags against each athlete's own baseline, return-to-play comparisons, a semester-to-date team view across both programs.</span></div></div>
     </div>
   </div>
   <div class="hd" style="margin-top:44px"><h3 style="font-size:clamp(26px,2.6vw,34px)">Cal can help test the two measurements whose validation is still open.</h3></div>
   <table class="cmp ev" style="margin-top:16px"><thead><tr><th>Measurement</th><th>Evidence today</th><th>With Cal's lab</th></tr></thead><tbody>
-    <tr><td>Knee and hip flexion</td><td><span class="stamp em">Validated</span> &nbsp;about 4&deg; agreement vs marker motion capture, OpenCap set</td><td>Control set: confirm the known numbers on Cal's equipment</td></tr>
+    <tr><td>Knee and hip flexion</td><td><span class="stamp cal">Reported evaluation</span> &nbsp;about 4&deg; agreement vs marker motion capture on the OpenCap set; statistic and scope in the method note</td><td>Control set: test agreement on Cal's equipment</td></tr>
     <tr><td>Frontal-plane knee (valgus)</td><td><span class="stamp gold">Not yet validated</span></td><td>Drop jump, single-leg landing, cutting, with a fatigue block</td></tr>
     <tr><td>Shoulder to pelvis rotation</td><td><span class="stamp gold">Not yet validated</span></td><td>A rotational sport movement: throw, swing, jump shot</td></tr>
   </tbody></table>
@@ -341,7 +341,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
         <div class="row"><b>Term</b><span>Six-month minimum, semester to semester after &middot; no multi-year lock-in</span></div>
         <div class="row"><b>Data</b><span>Cal owns it &middot; never sold or shared &middot; deletable any time &middot; export on request</span></div>
         <div class="row"><b>Day 30</b><span>Every athlete captured once, baseline report back the day it's filmed</span></div>
-        <div class="row"><b>Day 60</b><span>Two trainers, one athlete, one day: the same read</span></div>
+        <div class="row"><b>Day 60</b><span>Two trainers, one athlete, one day: test agreement, same protocol</span></div>
         <div class="row"><b>Day 90</b><span>Drift against each athlete's own baseline, team view across both programs</span></div>
       </div>
       <p class="check"><b>If we miss</b>a checkpoint isn't in your staff's hands as written, the next month doesn't bill until it is.</p>
@@ -841,15 +841,16 @@ const DATA = {
   function drawMulti() {
     MC.forEach(o => {
       const { m, g, c } = o, W = c.width, H = c.height; g.clearRect(0, 0, W, H); g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
-      const L = 58, R = W - 18, T = 48, B = H - 34;
+      const L = 58, R = W - 18, T = 48, B = H - 58, RAIL = H - 22;
       const pts = rows.filter(r => valid(r, m.key)), Ac = pts.filter(r => r.set === 'A');
-      const vals = pts.map(r => r[m.key]); let lo = Math.min(...vals), hi = Math.max(...vals); if (hi - lo < 1e-6) hi = lo + 1; const pad = (hi - lo) * .2; lo -= pad; hi += pad;
+      const vals = Ac.map(r => r[m.key]); let lo = Math.min(...vals), hi = Math.max(...vals); if (hi - lo < 1e-6) hi = lo + 1; const pad = (hi - lo) * .2; lo -= pad; hi += pad;
       const x = d => L + d / 106 * (R - L), y = v => B - (v - lo) / (hi - lo) * (B - T);
       const bmin = Math.min(...Ac.map(r => r[m.key])), bmax = Math.max(...Ac.map(r => r[m.key]));
       g.fillStyle = GOLD2; g.fillRect(L, y(bmax), R - L, y(bmin) - y(bmax));
       g.strokeStyle = INK2; g.lineWidth = 1.5; g.setLineDash([6, 5]); g.beginPath(); g.moveTo(L, y(REF[m.key])); g.lineTo(R, y(REF[m.key])); g.stroke(); g.setLineDash([]);
       g.strokeStyle = LINE; g.lineWidth = 1.5; g.beginPath(); g.moveTo(L, B); g.lineTo(R, B); g.stroke();
-      g.fillStyle = INK3; font(g, 500, 11, mono); g.textAlign = 'center'; [['JAN', 0], ['FEB', 17], ['MAR', 45], ['APR', 76], ['MAY', 106]].forEach(([t, d]) => g.fillText(t, x(d), B + 18));
+      g.fillStyle = INK3; font(g, 500, 11, mono); g.textAlign = 'center'; [['JAN', 0], ['FEB', 17], ['MAR', 45], ['APR', 76], ['MAY', 106]].forEach(([t, d]) => g.fillText(t, x(d), B + 14));
+      g.textAlign = 'right'; g.fillText('kept:', L - 6, RAIL + 4); 
       g.textAlign = 'right'; [lo + pad, hi - pad].forEach(v => g.fillText(v.toFixed(m.dec), L - 8, y(v) + 4));
       g.fillStyle = INK; font(g, 600, 18); g.textAlign = 'left'; g.fillText(m.label.toUpperCase(), L, 24);
       g.fillStyle = INK3; font(g, 500, 12, mono); g.fillText(m.unit, L + g.measureText(m.label.toUpperCase()).width * 1.05 + 14, 24);
@@ -859,14 +860,14 @@ const DATA = {
       Ac.slice(0, upto).forEach((r, i) => { i ? g.lineTo(x(r.day), y(r[m.key])) : g.moveTo(x(r.day), y(r[m.key])); }); g.stroke();
       o.hit = [];
       pts.forEach(r => {
-        const px = x(r.day), py = y(r[m.key]), on = rows.indexOf(r) === sel, isA = r.set === 'A';
+        const isA = r.set === 'A', px = x(r.day), py = isA ? y(r[m.key]) : RAIL, on = rows.indexOf(r) === sel;
         if (isA && Ac.indexOf(r) >= upto) return;
         if (isA) { g.fillStyle = CAL; g.beginPath(); g.arc(px, py, on ? 8 : 5.5, 0, Math.PI * 2); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 2; g.stroke(); }
-        else { g.strokeStyle = SLATE; g.lineWidth = 1.5; g.setLineDash([2, 3]); g.beginPath(); g.arc(px, py, on ? 7 : 4.5, 0, Math.PI * 2); g.stroke(); g.setLineDash([]); }
-        if (on) { g.strokeStyle = GOLD; g.lineWidth = 2.5; g.beginPath(); g.arc(px, py, 13, 0, Math.PI * 2); g.stroke(); g.fillStyle = INK; font(g, 700, 17); g.textAlign = px > R - 70 ? 'right' : 'center'; g.fillText(r[m.key].toFixed(m.dec) + ' ' + m.unit, px, py - 19); }
+        else { g.strokeStyle = SLATE; g.lineWidth = 1.5; g.beginPath(); g.arc(px, py, on ? 6 : 4, 0, Math.PI * 2); g.stroke(); }
+        if (on) { g.strokeStyle = GOLD; g.lineWidth = 2.5; g.beginPath(); g.arc(px, py, isA ? 13 : 10, 0, Math.PI * 2); g.stroke(); if (isA) { g.fillStyle = INK; font(g, 700, 17); g.textAlign = px > R - 70 ? 'right' : 'center'; g.fillText(r[m.key].toFixed(m.dec) + ' ' + m.unit, px, py - 19); } }
         o.hit.push({ x: px, y: py, i: rows.indexOf(r) });
       });
-      if (reveal >= 1) { const d = LAST[m.key] - REF[m.key]; g.fillStyle = CAL; font(g, 700, 15); g.textAlign = 'right'; g.fillText((d > 0 ? '+' : '') + d.toFixed(m.dec) + ' vs Jan', R, 24); }
+      const sr = rows[sel]; if (reveal >= 1 && sr.set === 'A' && valid(sr, m.key)) { const d = sr[m.key] - REF[m.key]; g.fillStyle = CAL; font(g, 700, 15); g.textAlign = 'right'; g.fillText(sr.date + ' vs 15 Jan  ' + (d > 0 ? '+' : '') + d.toFixed(m.dec), R, 24); }
     });
   }
   onceVisible(multi, () => anim(1800, p => { reveal = p; drawMulti(); }), 0.2);
@@ -886,7 +887,7 @@ const DATA = {
     // baseline polygon
     rg.strokeStyle = INK2; rg.lineWidth = 2; rg.setLineDash([6, 5]); rg.beginPath(); METRICS.forEach((m, i) => { const [x, y] = P(i, norm(m, REF[m.key])); i ? rg.lineTo(x, y) : rg.moveTo(x, y); }); rg.closePath(); rg.stroke(); rg.setLineDash([]);
     // selected polygon
-    const ok = METRICS.every(m => valid(r, m.key));
+    const ok = r.set === 'A' && METRICS.every(m => valid(r, m.key));
     if (ok) {
       rg.beginPath(); METRICS.forEach((m, i) => { const t = norm(m, r[m.key]) * radarP; const [x, y] = P(i, t); i ? rg.lineTo(x, y) : rg.moveTo(x, y); }); rg.closePath();
       rg.fillStyle = r.set === 'A' ? 'rgba(0,50,98,.16)' : 'rgba(122,138,146,.14)'; rg.fill(); rg.strokeStyle = r.set === 'A' ? CAL : SLATE; rg.lineWidth = 3; if (r.set !== 'A') rg.setLineDash([4, 4]); rg.stroke(); rg.setLineDash([]);
@@ -895,8 +896,8 @@ const DATA = {
     // labels with values
     METRICS.forEach((m, i) => { const [x, y] = P(i, 1.32); rg.textAlign = x < cx - 10 ? 'right' : x > cx + 10 ? 'left' : 'center'; rg.fillStyle = INK; font(rg, 600, 15); rg.fillText(m.label.toUpperCase(), x, y - 6); rg.fillStyle = valid(r, m.key) ? (r.set === 'A' ? CAL : SLATE) : INK3; font(rg, 500, 14, mono); rg.fillText(valid(r, m.key) ? r[m.key].toFixed(m.dec) + ' ' + m.unit : 'not measured', x, y + 13); rg.fillStyle = INK3; font(rg, 500, 11, mono); rg.fillText('ref ' + REF[m.key].toFixed(m.dec), x, y + 29); });
     rg.fillStyle = INK2; font(rg, 600, 15); rg.textAlign = 'left'; rg.fillText((r.set === 'A' ? 'COMPARED CAPTURE  \u00b7  ' : 'KEPT, NOT COMPARED  \u00b7  ') + r.date.toUpperCase(), 18, 26);
-    rg.fillStyle = INK3; font(rg, 500, 11, mono); rg.textAlign = 'right'; rg.fillText('dashed = Jan reference \u00b7 axes scaled to his own compared range', W - 18, H - 14);
-    if (!ok) { rg.fillStyle = INK3; font(rg, 500, 13, mono); rg.textAlign = 'center'; rg.fillText('side-view metrics not measured from this camera', cx, cy + 4); }
+    rg.fillStyle = INK3; font(rg, 500, 11, mono); rg.textAlign = 'right'; rg.fillText('dashed = Jan reference \u00b7 each axis = min to max of the 5 compared captures \u00b7 shape is not a score', W - 18, H - 14);
+    if (!ok) { rg.fillStyle = INK3; font(rg, 500, 13, mono); rg.textAlign = 'center'; rg.fillText(r.set === 'A' ? 'side-view metrics not measured from this camera' : 'kept capture: outside the comparison gate, not drawn', cx, cy + 4); }
   }
   onceVisible(rc, () => anim(1000, p => { radarP = p; drawRadar(); }));
   drawRadar();
@@ -910,22 +911,23 @@ const DATA = {
       g.clearRect(0, 0, W, H); g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
       const colW = (W - 200) / rows.length, top = 70, bandH = (H - top - 40) / ROWS.length;
       g.fillStyle = INK3; font(g, 500, 12, mono); g.textAlign = 'center';
-      rows.forEach((r, i) => { const x = 170 + i * colW + colW / 2; g.fillText(r.date.replace(' ', ''), x, 44); if (r.set !== 'A') { g.fillStyle = '#F6F1E6'; g.fillRect(170 + i * colW + 2, top - 8, colW - 4, H - top - 30); g.fillStyle = INK3; } });
+      rows.forEach((r, i) => { const x = 170 + i * colW + colW / 2; g.fillStyle = r.set === 'A' ? INK2 : INK3; g.fillText(r.date.replace(' ', ''), x, 44); });
       ROWS.forEach((row, k) => {
         const y0 = top + k * bandH, mid = y0 + bandH / 2 - 6, maxV = Math.max(...rows.flatMap(r => [r[row.l] || 0, r[row.r] || 0])) || 1, sc = (bandH / 2 - 26) / maxV;
         g.fillStyle = INK; font(g, 600, 15); g.textAlign = 'left'; g.fillText(row.t, 18, y0 + 12);
         g.fillStyle = INK3; font(g, 500, 11, mono); g.fillText('L up \u00b7 R down \u00b7 ' + row.unit, 18, y0 + 30);
         g.strokeStyle = LINE; g.beginPath(); g.moveTo(160, mid); g.lineTo(W - 20, mid); g.stroke();
         rows.forEach((r, i) => {
-          const lv = r[row.l], rv = r[row.r]; if (lv == null || rv == null || (lv <= 0 && rv <= 0)) return;
-          const x = 170 + i * colW + colW / 2, bw = Math.min(26, colW * .5), on = i === sel;
+          const lv = r[row.l], rv = r[row.r]; const x = 170 + i * colW + colW / 2, bw = Math.min(26, colW * .5), on = i === sel;
+          if (r.set !== 'A') { g.strokeStyle = on ? GOLD : LINE; g.lineWidth = on ? 2.5 : 1.5; g.beginPath(); g.arc(x, mid, 5, 0, Math.PI * 2); g.stroke(); return; }
+          if (lv == null || rv == null || (lv <= 0 && rv <= 0)) return;
           g.fillStyle = r.set === 'A' ? CAL : SLATE; g.fillRect(x - bw / 2, mid - lv * sc * p, bw, lv * sc * p);
           g.fillStyle = r.set === 'A' ? '#6E8FB5' : '#B4BEC4'; g.fillRect(x - bw / 2, mid, bw, rv * sc * p);
           if (on) { g.strokeStyle = GOLD; g.lineWidth = 2.5; g.strokeRect(x - bw / 2 - 5, mid - lv * sc - 5, bw + 10, (lv + rv) * sc + 10); g.fillStyle = INK; font(g, 700, 13, mono); g.textAlign = 'center'; g.fillText('L ' + lv.toFixed(row.dec), x, mid - lv * sc - 10); g.fillText('R ' + rv.toFixed(row.dec), x, mid + rv * sc + 16); }
         });
       });
       g.fillStyle = INK2; font(g, 600, 15); g.textAlign = 'left'; g.fillText('LEFT VS RIGHT, EVERY CAPTURE', 18, 22);
-      g.fillStyle = INK3; font(g, 500, 11, mono); g.textAlign = 'right'; g.fillText('blue = compared set \u00b7 grey on shaded = kept, filmed differently \u00b7 values as exported per session', W - 20, 22);
+      g.fillStyle = INK3; font(g, 500, 11, mono); g.textAlign = 'right'; g.fillText('bars = the 5 compared captures only \u00b7 hollow marks = kept, not compared (click to view) \u00b7 values as exported per session', W - 20, 22);
     }
     onceVisible(c, () => anim(1100, q => { p = q; draw(); })); draw();
     c.addEventListener('click', e => { const rc2 = c.getBoundingClientRect(), mx = (e.clientX - rc2.left) * c.width / rc2.width; const colW = (W - 200) / rows.length; const i = Math.floor((mx - 170) / colW); if (i >= 0 && i < rows.length) show(i); });
@@ -971,14 +973,14 @@ const DATA = {
       g.clearRect(0, 0, W, H); g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
       const L = 200, R = W - 40, y1 = 86, y2 = 196, h = 34;
       g.fillStyle = INK; font(g, 600, 20); g.textAlign = 'left'; g.fillText('TODAY', 30, y1 + 6); g.fillStyle = INK3; font(g, 500, 12, mono); g.fillText('after the trainer films', 30, y1 + 26);
-      g.fillStyle = INK; font(g, 600, 20); g.fillText('WITH COURO', 30, y2 + 6); g.fillStyle = INK3; font(g, 500, 12, mono); g.fillText('proposed same-day commitment', 30, y2 + 26);
+      g.fillStyle = INK; font(g, 600, 20); g.fillText('WITH COURO', 30, y2 + 6); g.fillStyle = INK3; font(g, 500, 12, mono); g.fillText('proposed, Day 30 commitment', 30, y2 + 26);
       g.fillStyle = '#F6F1E6'; g.fillRect(L, y1 - h / 2, R - L, h); g.fillRect(L, y2 - h / 2, R - L, h);
-      const segW = (R - L) / steps.length, tp = Math.min(1, p / 0.9);
+      const segW = (R - L) / steps.length, tp = p;
       steps.forEach((s, i) => { const f = Math.max(0, Math.min(1, tp * steps.length - i)); g.fillStyle = SLATE; g.fillRect(L + i * segW + 2, y1 - h / 2, (segW - 4) * f, h); g.fillStyle = f >= 1 ? '#fff' : INK2; font(g, 600, 14); g.textAlign = 'center'; g.fillText(s.toUpperCase(), L + i * segW + segW / 2, y1 + 5); });
-      const cf = Math.min(1, p / 0.18); g.fillStyle = EM; g.fillRect(L + 2, y2 - h / 2, (R - L - 4) * cf, h);
-      if (cf >= 1) { g.fillStyle = '#fff'; font(g, 600, 15); g.textAlign = 'center'; g.fillText('CAPTURE  \u2192  REVIEW THE FLAG  \u2192  REPORT IN THE AMS, THE SAME DAY', (L + R) / 2, y2 + 5); }
-      g.fillStyle = INK3; font(g, 500, 12, mono); g.textAlign = 'right'; g.fillText('five hand steps by the trainer vs zero \u00b7 illustrative sequence, not timed', R, H - 14);
-      g.fillStyle = tp >= 1 ? INK2 : INK3; font(g, 700, 15); g.textAlign = 'left'; g.fillText('5 steps by hand', L, y1 - 30); g.fillStyle = EM; g.fillText('0 steps by hand', L, y2 - 30);
+      const cf = p; g.fillStyle = CAL; g.fillRect(L + 2, y2 - h / 2, (R - L - 4) * cf, h);
+      if (cf >= 1) { g.fillStyle = '#fff'; font(g, 600, 15); g.textAlign = 'center'; g.fillText('CAPTURE  \u2192  TRAINER REVIEWS THE FLAG  \u2192  SAME-DAY REPORT IN THE AGREED DESTINATION', (L + R) / 2, y2 + 5); }
+      g.fillStyle = INK3; font(g, 500, 12, mono); g.textAlign = 'right'; g.fillText('proposed workflow \u00b7 illustrative, not timed \u00b7 the trainer still reviews every flag', R, H - 14);
+      g.fillStyle = tp >= 1 ? INK2 : INK3; font(g, 700, 15); g.textAlign = 'left'; g.fillText('five manual handoffs', L, y1 - 30); g.fillStyle = CAL; g.fillText('one review workflow', L, y2 - 30);
     }
     onceVisible(c, () => anim(3200, draw)); draw(0);
   })();
@@ -988,12 +990,12 @@ const DATA = {
     const c = $('#floor'), k = c.getContext('2d'), W = c.width, H = c.height, slider = $('#floorDay'), lab = $('#floorLab');
     let seed = 7; const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
     const teams = [['Football', 105], ['Program two', 95]];
-    const dots = []; teams.forEach(([name, n], ti) => { for (let i = 0; i < n; i++) { const r = rnd(); dots.push({ ti, i, state: r < 0.72 ? 0 : r < 0.9 ? 1 : 2, capDay: 1 + Math.floor(rnd() * 30) }); } });
+    const dots = []; teams.forEach(([name, n], ti) => { for (let i = 0; i < n; i++) { const r = rnd(); dots.push({ ti, i, state: 0, capDay: 1 + Math.floor(rnd() * 30) }); } });
     function draw(day) {
       k.clearRect(0, 0, W, H); k.fillStyle = '#fff'; k.fillRect(0, 0, W, H);
-      const per = 21, dotW = (W - 120) / per; let y0 = 90, have = 0;
+      const per = 21, dotW = (W - 120) / per; let y0 = 108, have = 0;
       teams.forEach(([name, n], ti) => {
-        k.fillStyle = INK3; font(k, 600, 15); k.textAlign = 'left'; k.fillText(name.toUpperCase() + '  \u00b7  ' + n + ' athletes', 60, y0 - 12);
+        k.fillStyle = INK3; font(k, 600, 15); k.textAlign = 'left'; k.fillText(name.toUpperCase() + '  \u00b7  ' + n + ' athletes (illustrative split)', 60, y0 - 12);
         dots.filter(d => d.ti === ti).forEach(d => {
           const cx = 60 + (d.i % per) * dotW + dotW / 2, cy = y0 + Math.floor(d.i / per) * 30 + 12;
           const own = day >= d.capDay; if (own) have++;
@@ -1004,12 +1006,13 @@ const DATA = {
         });
         y0 += Math.ceil(n / per) * 30 + 46;
       });
-      k.fillStyle = INK; font(k, 700, 34); k.textAlign = 'left'; k.fillText('DAY ' + day, 60, 46);
-      k.fillStyle = CAL; font(k, 700, 34); k.textAlign = 'right'; k.fillText(have + ' of 200', W - 60, 46);
-      k.fillStyle = INK3; font(k, 500, 13, mono); k.fillText(day >= 90 ? 'own baseline \u00b7 drift flags \u00b7 team view' : day >= 60 ? 'own baseline \u00b7 same read from any trainer' : day >= 30 ? 'captured once, report back same day' : 'with their own baseline on record', W - 60, 68);
+      k.fillStyle = GOLD3; font(k, 600, 13); k.textAlign = 'left'; k.fillText('ILLUSTRATIVE ROLLOUT TARGETS, NOT OBSERVED CAL RESULTS', 60, 22);
+      k.fillStyle = INK; font(k, 700, 34); k.textAlign = 'left'; k.fillText('DAY ' + day, 60, 56);
+      k.fillStyle = CAL; font(k, 700, 34); k.textAlign = 'right'; k.fillText(have + ' of 200', W - 60, 56);
+      k.fillStyle = INK3; font(k, 500, 13, mono); k.fillText(day >= 90 ? 'target: own baseline \u00b7 drift flags \u00b7 team view' : day >= 60 ? 'target: test agreement between trainers, same protocol' : day >= 30 ? 'target: captured once, report back same day' : 'with their own reference capture (illustrative)', W - 60, 78);
       const ly = H - 40; font(k, 500, 13, mono); k.textAlign = 'left';
       function leg(x, fill, stroke, txt) { if (fill) { k.fillStyle = fill; k.beginPath(); k.arc(x, ly - 5, 7, 0, Math.PI * 2); k.fill(); } else { k.strokeStyle = stroke; k.lineWidth = 1.5; k.beginPath(); k.arc(x, ly - 5, 7, 0, Math.PI * 2); k.stroke(); } k.fillStyle = INK2; k.fillText(txt, x + 16, ly); }
-      leg(60, null, LINE, 'no baseline on record'); leg(300, SLATE, null, 'a read, by one trainer'); leg(540, GOLD, null, 'a read that differs by trainer'); leg(820, CAL, null, 'own baseline, one protocol');
+      leg(60, null, LINE, 'no reference capture yet (illustrative)'); leg(460, CAL, null, 'own reference capture, one protocol');
       k.fillStyle = INK3; k.textAlign = 'right'; k.fillText('illustration of the rollout, not measured Cal data', W - 20, H - 14);
       if (lab) lab.textContent = 'Day ' + day;
     }
@@ -1023,8 +1026,8 @@ const DATA = {
     { el: '#multi', t: '01 \u00b7 Drift, six metrics', b: 'A whole season on one phone. Blue = compared against his own band; grey = filmed differently, kept, not charted. Click any point to play that capture.' },
     { el: '#radar', t: '01 \u00b7 Profile vs reference', b: 'Dashed is January. Blue is the selected capture. Axes are scaled to his own compared range, not a roster norm.' },
     { el: '#asym', t: '01 \u00b7 Left vs right', b: 'Every capture, left up and right down. The kind of asymmetry the trainer is watching after surgery, on a season of ordinary film.' },
-    { el: '#race', t: '02 \u00b7 Fast', b: 'Five steps by hand today. Zero with Couro: capture, review, report. Same-day delivery is the Day 30 commitment in the terms.' },
-    { el: '#floor', t: '03 \u00b7 Raise the floor', b: 'Drag the day. Today the baseline is whoever is holding the phone. By day 90, 200 athletes have their own reference and every trainer scores the same protocol.' },
+    { el: '#race', t: '02 \u00b7 Fast', b: 'Five manual handoffs today. Proposed: capture, trainer review, same-day report. The trainer still reviews every flag; same-day is the Day 30 commitment.' },
+    { el: '#floor', t: '03 \u00b7 Raise the floor', b: 'Drag the day. Illustrative targets: a reference capture for every athlete by day 30, a test of agreement between trainers by day 60, drift against own baseline by day 90.' },
     { el: '#b4 .steps', t: '04 \u00b7 Today', b: 'Which program joins football, a staff lead and a baseline window, a lab contact and date range, an intro to IT and procurement.' }
   ];
   let ti = -1, ringEl = null; const tour = $('#tour');
