@@ -138,6 +138,10 @@ canvas.gfx{width:100%;height:auto;display:block;background:#fff;border-radius:16
 .speed .with ol li:before{background:var(--em)}
 .speed .with ol li.s{text-decoration:line-through;color:var(--ink3)}
 .speed .with ol li.s:before{background:var(--line)}
+.multi{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+@media(max-width:900px){.multi{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.multi{grid-template-columns:1fr}}
+canvas.gfx.sm{border-radius:14px}
 /* season strip */
 .strip{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:22px}
 @media(max-width:1000px){.strip{grid-template-columns:repeat(4,1fr)}}
@@ -155,9 +159,6 @@ canvas.gfx{width:100%;height:auto;display:block;background:#fff;border-radius:16
 .legend i{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:7px;background:var(--cal)}
 .legend i.kept{background:transparent;border:2px dashed var(--ink3)}
 .legend i.band{border-radius:3px;background:var(--gold2);border:1px solid var(--gold)}
-.metricpick{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
-.metricpick button{font-family:'Barlow Condensed';font-weight:600;font-size:16px;letter-spacing:.06em;text-transform:uppercase;border:1.5px solid var(--line);background:#fff;color:var(--ink2);border-radius:999px;padding:9px 14px 8px;cursor:pointer;min-height:40px}
-.metricpick button.on{border-color:var(--ink);color:var(--ink);background:#fffdf6;box-shadow:0 0 0 1.5px var(--ink)}
 /* baseline raise: department */
 .raise{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:start;margin-top:30px}
 @media(max-width:900px){.raise{grid-template-columns:1fr}}
@@ -198,7 +199,6 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
 @media(max-width:900px){
   .stage{grid-template-columns:1fr!important}
   #strip{grid-template-columns:repeat(4,1fr)!important}
-  canvas.gfx#drift{aspect-ratio:1400/520}
   .cmp td,.cmp th{padding:8px 8px;font-size:14px}
   .cmp td:first-child{font-size:16px}
   .board{grid-template-columns:1fr}
@@ -223,7 +223,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
 <div class="wrap hero" id="top">
   <div class="who">For Cal's athletic trainers &nbsp;&middot;&nbsp; <span>one phone, same day, their own baseline</span></div>
   <h1>Film the rep. Get the read back today.</h1>
-  <p class="sub">A trainer films the rep the athlete is already doing. Couro rebuilds the body in 3D, measures it, and compares it to <b>that athlete's own baseline</b>. The trainer gets film, numbers and a flag, not a diagnosis.</p>
+  <p class="sub">One phone, the rep they were already doing. Couro rebuilds the body in 3D, measures it, and compares it to <b>that athlete's own baseline</b>. Film, numbers, a flag. Not a diagnosis.</p>
   <div class="tools">
     <button class="btn primary" id="tourBtn">Walk me through it</button>
     <a class="btn" href="https://cal-athletics-couro-proposal.netlify.app" target="_blank" rel="noopener">The proposal (Aug 20)</a>
@@ -245,19 +245,10 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
     </div>
     <div class="score" id="scoreboard">
       <div class="hd"><h3>The read &middot; return to sport, day 134</h3><span class="meta">founder's own knee &middot; used with consent</span></div>
-      <div class="gauges">
-        <div class="gauge"><span class="k">Left stance <i>reported</i></span><span class="v" data-count="4" data-dec="0">0<small>&deg;</small></span>
-          <span class="t">frontal-plane knee angle at stance, from the frames</span></div>
-        <div class="gauge look"><span class="k">Right stance <i>surgical side</i></span><span class="v gold" data-count="10.3" data-dec="1">0<small>&deg;</small></span>
-          <span class="t">the side the trainer is watching after surgery</span></div>
-        <div class="gauge"><span class="k">Reported gap <i>review flag</i></span><span class="v gold" data-count="6.3" data-dec="1">0<small>&deg;</small></span>
-          <span class="t">within-capture left to right asymmetry, flagged for a person to read</span></div>
-        <div class="gauge"><span class="k">This measurement</span><span class="v" style="font-size:clamp(26px,2.6vw,34px);line-height:1.05;margin-top:10px">Not yet validated</span>
-          <span class="t">frontal-plane knee is one of the two numbers Cal's lab can test (beat 03). Knee and hip flexion are validated.</span></div>
-      </div>
+      <canvas id="dials" width="800" height="330" style="width:100%;height:auto;display:block"></canvas>
       <div class="foot">
-        <span class="stamp gold">Flagged &middot; 2 drills named</span>
-        <span class="stamp cal">Numbers as reported, film attached</span>
+        <span class="stamp gold">Review flag</span>
+        <span class="stamp cal">Frontal-plane knee: not yet validated</span>
         <button class="btn small" id="evBtn">See the frames and the report</button>
       </div>
     </div>
@@ -270,7 +261,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
   </div>
 
   <div class="index">
-    <a href="#b1"><b>01</b><span>Drift against his own baseline</span></a>
+    <a href="#b1"><b>01</b><span>Drift, profile, left vs right</span></a>
     <a href="#b2"><b>02</b><span>Fast: five steps by hand to zero</span></a>
     <a href="#b3"><b>03</b><span>Raise the floor for 200 athletes</span></a>
     <a href="#b4"><b>04</b><span>What we decide today</span></a>
@@ -279,54 +270,44 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
 
 <!-- 01 DRIFT -->
 <section class="beat" id="b1"><div class="wrap">
-  <div class="eyebrow"><b>01</b> Drift &middot; one athlete &middot; 14 captures &middot; 15 Jan to 1 May 2025</div>
-  <div class="hd"><h2>Every capture lands on the same chart, against his own January baseline.</h2></div>
-  <p class="why">A whole season on one phone: four venues, three views, meet days and practice days, filmed by whoever was standing there. The gold band is this athlete's own normal from the comparable captures. Blue points are compared; grey ones were filmed differently (far, another view, another task), so they are kept and labelled, never charted as change. That gate is what stops a warm-up rep being read as drift.</p>
-  <div class="metricpick" id="metricpick"></div>
-  <canvas class="gfx" id="drift" width="1400" height="520" style="margin-top:14px"></canvas>
-  <div class="legend"><span><i></i>Compared: side view, near, sprint</span><span><i class="kept"></i>Kept and labelled, not charted</span><span><i class="band"></i>His own band from the compared captures</span><span class="mono" style="color:var(--ink3)">dashed line = January baseline</span></div>
-  <div class="stage" style="grid-template-columns:minmax(300px,560px) 1fr;margin-top:26px">
+  <div class="eyebrow"><b>01</b> Drift &middot; one athlete &middot; 14 captures &middot; 15 Jan to 1 May 2025 &middot; one phone</div>
+  <div class="hd"><h2>Six metrics, a whole season, against his own January reference.</h2></div>
+  <p class="why">Blue is compared: same view, near framing, same sprint. Grey was filmed differently, so it is kept and labelled, never charted as change. Gold band: his own compared range. Click any point to play that capture.</p>
+  <div class="multi" id="multi"></div>
+  <div class="stage" style="grid-template-columns:minmax(300px,520px) 1fr;margin-top:26px">
     <div>
       <div class="player" id="seasonBox" style="aspect-ratio:16/10">
         <video id="season" playsinline muted loop preload="metadata"></video>
         <span class="tag" id="seasonTag">Capture</span><span class="tag right" id="seasonMeta"></span>
       </div>
-      <div class="ctl"><div class="seg" id="seasonSpeed"><button data-r="0.25">&frac14;</button><button data-r="0.5" class="on">&frac12; speed</button><button data-r="1">Real time</button></div><span class="meta" id="seasonNote"></span></div>
+      <div class="ctl"><div class="seg" id="seasonSpeed"><button data-r="0.25">&frac14;</button><button data-r="0.5" class="on">&frac12; speed</button><button data-r="1">Real time</button></div>
+        <div class="seg"><button data-jump="ref">Reference</button><button data-jump="last">Latest compared</button></div></div>
+      <span class="meta" id="seasonNote" style="display:block;margin-top:8px"></span>
+      <div class="strip" id="strip" style="grid-template-columns:repeat(7,1fr);margin-top:14px"></div>
     </div>
     <div class="panel">
+      <canvas class="gfx" id="radar" width="760" height="560"></canvas>
       <table class="cmp" id="cmp"><thead><tr><th>Metric</th><th>Reference<br><span id="cmpRefD"></span></th><th>Selected<br><span id="cmpSelD"></span></th><th>Change</th></tr></thead><tbody></tbody></table>
-      <p class="why" style="font-size:17px" id="driftCopy"></p>
-      <div class="strip" id="strip" style="grid-template-columns:repeat(7,1fr)"></div>
     </div>
   </div>
+  <canvas class="gfx" id="asym" width="1400" height="520" style="margin-top:26px"></canvas>
 </div></section>
 
 <!-- 02 FAST -->
 <section class="beat" id="b2"><div class="wrap">
   <div class="eyebrow"><b>02</b> Fast &middot; what changes on the training-room floor</div>
-  <div class="hd"><h2>After the trainer films: five steps by hand today, zero with Couro.</h2></div>
-  <p class="why">No uploads, no new tab, nothing for an assistant coach to re-key. The report comes back the day it's filmed, already compared to that athlete's baseline, and lands in the AMS where staff already look.</p>
-  <div class="speed">
-    <div class="col"><h3>Today</h3><div class="big">5 <small style="font-size:22px;color:var(--ink3)">steps by hand</small></div>
-      <ol><li>Watch it back</li><li>Measure by eye</li><li>Write it up</li><li>File it</li><li>Find last month's</li></ol></div>
-    <div class="arrow">&rarr;</div>
-    <div class="col with"><h3>With Couro</h3><div class="big">0 <small style="font-size:22px;color:var(--ink3)">steps by hand</small></div>
-      <ol><li class="s">Watch it back</li><li class="s">Measure by eye</li><li class="s">Write it up</li><li class="s">File it</li><li class="s">Find last month's</li><li>Read the flag. Decide.</li></ol></div>
-  </div>
-  <div class="gauges" style="margin-top:22px;grid-template-columns:repeat(3,1fr)">
-    <div class="gauge"><span class="k">1 &middot; Capture</span><span class="v" style="font-size:34px;margin-top:8px">One rep, one phone</span><span class="t">the drill they were already doing, filmed by whoever is there</span></div>
-    <div class="gauge"><span class="k">2 &middot; Review</span><span class="v" style="font-size:34px;margin-top:8px">Film, frames, flag</span><span class="t">the flagged frames sit beside the film, compared to that athlete's reference capture</span></div>
-    <div class="gauge"><span class="k">3 &middot; Report</span><span class="v" style="font-size:34px;margin-top:8px">Same day, in the AMS</span><span class="t">proposed service commitment: the Day 30 check in the terms below</span></div>
-  </div>
+  <div class="hd"><h2>Five steps by hand today. Zero with Couro.</h2></div>
+  <p class="why">No uploads, no new tab, nothing for an assistant coach to re-key. The report lands in the AMS where staff already look, already compared to that athlete's reference.</p>
+  <canvas class="gfx" id="race" width="1400" height="260" style="margin-top:26px"></canvas>
 </div></section>
 
 <!-- 03 RAISE THE FLOOR -->
 <section class="beat" id="b3"><div class="wrap">
   <div class="eyebrow"><b>03</b> Raise the floor &middot; 200 athletes &middot; the same read from every trainer</div>
   <div class="hd"><h2>Two trainers, one athlete, one day: the same flags, the same next action.</h2></div>
-  <p class="why">Today the baseline is whoever's holding the phone. With one protocol built into the app, every athlete on both programs gets a baseline in the first 30 days, and every trainer scores against the same one. That is a department floor, not a ceiling for the best-staffed team.</p>
+  <p class="why">Today the baseline is whoever's holding the phone. One protocol in the app: every athlete on both programs gets a reference capture in 30 days, and every trainer scores the same one. Drag the day.</p>
   <div class="raise">
-    <canvas class="gfx" id="floor" width="1200" height="700"></canvas>
+    <div><canvas class="gfx" id="floor" width="1200" height="700"></canvas><div class="scrub" style="margin-top:10px"><input type="range" id="floorDay" min="0" max="90" value="0" step="1" aria-label="Day"></div><div class="legend" style="margin-top:2px"><span class="mono" style="color:var(--ink3)">drag: <b id="floorLab" style="color:var(--ink)">Day 0</b> &rarr; Day 30 captured once &rarr; Day 60 same read &rarr; Day 90 team view</span></div></div>
     <div class="steps blue">
       <div class="st"><div><b>Day 30 &middot; the standard exists</b><span>Every rostered athlete captured once in reps your staff already run. The check: pick any athlete, their baseline report is there, back the day it was filmed.</span></div></div>
       <div class="st"><div><b>Day 60 &middot; every trainer reads the same page</b><span>Two staff members capture the same athlete on the same day and get the same read, inside the normal rep-to-rep range.</span></div></div>
@@ -783,35 +764,55 @@ const DATA = {
 };
 </script>
 <script>
-/* Couro x Cal: trainer's view v2. No frameworks. Every number is read from DATA / SEASON (built from real session exports). */
+/* Couro x Cal: trainer's view v3. Visual-first. Every number comes from DATA / SEASON (real session exports). */
 (function () {
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
-  const INK = '#1A1A1A', INK2 = '#5A554B', INK3 = '#9A9385', CAL = '#003262', GOLD = '#C0920F', GOLD2 = '#FBF1D6', GOLD3 = '#8A6A0C', EM = '#16A34A', LINE = '#EDE4CE', SLATE = '#7A8A92';
+  const INK = '#1A1A1A', INK2 = '#5A554B', INK3 = '#9A9385', CAL = '#003262', CAL2 = '#E6EDF5', GOLD = '#C0920F', GOLD2 = '#FBF1D6', GOLD3 = '#8A6A0C', EM = '#16A34A', EM2 = '#E7F6EC', LINE = '#EDE4CE', SLATE = '#7A8A92', CREAM = '#FFF9EC';
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ease = p => 1 - Math.pow(1 - p, 3);
+  const rows = DATA.rows, A = rows.filter(r => r.set === 'A'), REF = A[0], LAST = A[A.length - 1];
+  let sel = rows.indexOf(LAST);
+  const onceVisible = (el, fn, th) => { if (!el) return; const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { io.disconnect(); fn(); } }), { threshold: th || 0.3 }); io.observe(el); };
+  function anim(dur, draw) { if (reduce) { draw(1); return; } const t0 = performance.now(); (function f(t) { const p = Math.min(1, (t - t0) / dur); draw(ease(p)); if (p < 1) requestAnimationFrame(f); })(t0); }
+  function font(g, w, s, fam) { g.font = w + ' ' + s + 'px ' + (fam || '"Barlow Condensed"'); }
+  const mono = '"IBM Plex Mono"';
 
-  /* ---------- count-up numbers + gauge dots, fired when visible ---------- */
-  function countUp(el) {
-    const to = +el.dataset.count, dec = +el.dataset.dec || 0, small = el.querySelector('small');
-    const t0 = performance.now(), dur = reduce ? 0 : 900;
-    function f(t) {
-      const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-      el.firstChild.nodeValue = (to * e).toFixed(dec);
-      if (p < 1) requestAnimationFrame(f);
+  /* ================= HERO: two angle dials + gap ================= */
+  (function () {
+    const cv = $('#dials'), g = cv.getContext('2d'), W = cv.width, H = cv.height;
+    const L = { x: 190, v: 4, label: 'LEFT STANCE', col: INK }, R = { x: 610, v: 10.3, label: 'RIGHT STANCE  \u00b7  SURGICAL SIDE', col: GOLD3 };
+    const cy = 250, rad = 140, MAX = 15; // dial spans 0..15 deg (the reported range on this capture, not a norm)
+    function dial(d, p) {
+      const a0 = Math.PI, a1 = 2 * Math.PI; // top half arc, 0 deg at left end
+      g.lineCap = 'round'; g.strokeStyle = LINE; g.lineWidth = 22; g.beginPath(); g.arc(d.x, cy, rad, a0, a1); g.stroke();
+      const v = d.v * p, ang = a0 + (v / MAX) * Math.PI;
+      g.strokeStyle = d.col === GOLD3 ? GOLD : CAL; g.beginPath(); g.arc(d.x, cy, rad, a0, ang); g.stroke();
+      // ticks
+      g.strokeStyle = INK3; g.lineWidth = 2; font(g, 500, 13, mono); g.fillStyle = INK3; g.textAlign = 'center';
+      [0, 5, 10, 15].forEach(t => { const ta = a0 + (t / MAX) * Math.PI; const x1 = d.x + Math.cos(ta) * (rad + 20), y1 = cy + Math.sin(ta) * (rad + 20); g.fillText(t + '\u00b0', x1, y1 + 4); });
+      // needle
+      g.strokeStyle = INK; g.lineWidth = 4; g.beginPath(); g.moveTo(d.x, cy); g.lineTo(d.x + Math.cos(ang) * (rad - 26), cy + Math.sin(ang) * (rad - 26)); g.stroke();
+      g.fillStyle = INK; g.beginPath(); g.arc(d.x, cy, 8, 0, Math.PI * 2); g.fill();
+      // value
+      g.fillStyle = d.col; font(g, 700, 76); g.textAlign = 'center'; g.fillText(v.toFixed(d.v % 1 ? 1 : 0) + '\u00b0', d.x, cy - 40);
+      g.fillStyle = INK2; font(g, 600, 15); g.fillText(d.label, d.x, cy + 40);
+      font(g, 500, 12, mono); g.fillStyle = INK3; g.fillText('frontal-plane knee at stance, as reported', d.x, cy + 60);
     }
-    if (dur === 0) { el.firstChild.nodeValue = to.toFixed(dec); return; }
-    requestAnimationFrame(f);
-  }
-  const seen = new WeakSet();
-  const ioNum = new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting || seen.has(e.target)) return; seen.add(e.target);
-    $$('[data-count]', e.target).forEach(countUp);
-    $$('.dot[data-to]', e.target).forEach(d => { d.style.left = '2%'; setTimeout(() => d.style.left = d.dataset.to, 60); });
-    const fl = $('#rtsFlag'); if (e.target.id === 'board' && fl) setTimeout(() => fl.classList.add('on'), 900);
-  }), { threshold: 0.3 });
-  ['#board', '#b2 .gauges'].forEach(s => { const el = $(s); if (el) ioNum.observe(el); });
+    function draw(p) {
+      g.clearRect(0, 0, W, H); dial(L, p); dial(R, p);
+      // gap bar between
+      const gx = 400, gy = 120, gw = 0; const gap = (R.v - L.v) * p;
+      g.fillStyle = GOLD3; font(g, 700, 44); g.textAlign = 'center'; g.fillText(gap.toFixed(1) + '\u00b0', gx, gy);
+      g.fillStyle = INK2; font(g, 600, 14); g.fillText('LEFT TO RIGHT GAP', gx, gy + 22);
+      g.fillStyle = GOLD3; font(g, 700, 13); g.fillText('REVIEW FLAG', gx, gy + 42);
+      // connector line
+      g.strokeStyle = GOLD; g.lineWidth = 2; g.setLineDash([4, 5]); g.beginPath(); g.moveTo(gx - 40, gy + 56); g.lineTo(gx + 40, gy + 56); g.stroke(); g.setLineDash([]);
+    }
+    draw(0); onceVisible($('#board'), () => { anim(1400, draw); setTimeout(() => $('#rtsFlag').classList.add('on'), reduce ? 0 : 1100); });
+  })();
 
-  /* ---------- hero player ---------- */
+  /* hero player */
   const rts = $('#rts'), scrub = $('#rtsScrub'), rtsT = $('#rtsT'), FPS = 30;
   rts.playbackRate = 0.5;
   (function sync() { if (rts.duration) { scrub.value = Math.round(rts.currentTime / rts.duration * 1000); rtsT.textContent = rts.currentTime.toFixed(2) + ' s'; } requestAnimationFrame(sync); })();
@@ -823,151 +824,207 @@ const DATA = {
   new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) rts.play().catch(() => {}); else rts.pause(); }), { threshold: 0.35 }).observe(rts);
   $('#evBtn').onclick = () => { const ev = $('#evidence'); const on = ev.style.display !== 'none'; ev.style.display = on ? 'none' : 'block'; $('#evBtn').textContent = on ? 'See the frames and the report' : 'Hide the frames and the report'; if (!on) ev.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); };
 
-  /* ---------- drift chart ---------- */
+  /* ================= DRIFT: small multiples ================= */
   const METRICS = [
-    { key: 'contact_time', label: 'Ground contact', unit: 's', dec: 2, better: 'lower' },
-    { key: 'velocity', label: 'Velocity', unit: 'm/s', dec: 2, better: 'higher' },
+    { key: 'velocity', label: 'Velocity', unit: 'm/s', dec: 2 },
+    { key: 'contact_time', label: 'Ground contact', unit: 's', dec: 2 },
     { key: 'stiffness', label: 'Vertical stiffness', unit: 'kN/m', dec: 1 },
     { key: 'grf', label: 'Ground reaction force', unit: 'x BW', dec: 2 },
     { key: 'trunk_lean', label: 'Trunk lean', unit: '\u00b0', dec: 1 },
     { key: 'hip_drop', label: 'Hip drop', unit: '\u00b0', dec: 1 },
   ];
-  const rows = DATA.rows, S = DATA.summary;
-  let mk = METRICS[0], sel = rows.findIndex(r => r.id === S.last_id);
-  const pick = $('#metricpick');
-  METRICS.forEach((m, i) => { const b = document.createElement('button'); b.textContent = m.label; b.className = i === 0 ? 'on' : ''; b.onclick = () => { $$('#metricpick button').forEach(x => x.classList.remove('on')); b.classList.add('on'); mk = m; drawDrift(); }; pick.appendChild(b); });
-  const cv = $('#drift'), g = cv.getContext('2d');
-  const hit = [];
-  function drawDrift() {
-    const W = cv.width, H = cv.height; g.clearRect(0, 0, W, H); g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
-    const L = 110, R = W - 40, T = 60, B = H - 80;
-    const ZERO_IS_MISSING = ['contact_time', 'velocity', 'stiffness', 'grf'];
-    const pts = rows.filter(r => r[mk.key] != null && !(ZERO_IS_MISSING.includes(mk.key) && r[mk.key] <= 0));
-    const unmeasured = rows.length - pts.length;
-    const A = pts.filter(r => r.set === 'A');
-    const vals = pts.map(r => r[mk.key]);
-    let lo = Math.min(...vals), hi = Math.max(...vals); if (hi - lo < 1e-6) { hi = lo + 1; } const pad = (hi - lo) * 0.18; lo -= pad; hi += pad;
-    const x = d => L + (d / 106) * (R - L), y = v => B - (v - lo) / (hi - lo) * (B - T);
-    // band: this athlete's own compared range
-    const bmin = Math.min(...A.map(r => r[mk.key])), bmax = Math.max(...A.map(r => r[mk.key]));
-    g.fillStyle = GOLD2; g.fillRect(L, y(bmax), R - L, y(bmin) - y(bmax));
-    g.strokeStyle = GOLD; g.lineWidth = 1; g.setLineDash([4, 5]); g.strokeRect(L, y(bmax), R - L, y(bmin) - y(bmax)); g.setLineDash([]);
-    g.fillStyle = GOLD3; g.font = '600 15px "Barlow Condensed"'; g.textAlign = 'right'; g.fillText('HIS OWN BAND', R - 8, y(bmax) - 8);
-    // baseline
-    const base = A[0]; g.strokeStyle = INK2; g.lineWidth = 2; g.setLineDash([7, 6]); g.beginPath(); g.moveTo(L, y(base[mk.key])); g.lineTo(R, y(base[mk.key])); g.stroke(); g.setLineDash([]);
-    g.fillStyle = INK2; g.font = '600 15px "Barlow Condensed"'; g.textAlign = 'left'; g.fillText('JAN BASELINE  ' + base[mk.key].toFixed(mk.dec) + ' ' + mk.unit, L + 8, y(base[mk.key]) - 8);
-    // axes
-    g.strokeStyle = LINE; g.lineWidth = 2; g.beginPath(); g.moveTo(L, B); g.lineTo(R, B); g.stroke();
-    g.fillStyle = INK3; g.font = '500 14px "IBM Plex Mono"'; g.textAlign = 'center';
-    [['JAN', 0], ['FEB', 17], ['MAR', 45], ['APR', 76], ['MAY', 106]].forEach(([m, d]) => g.fillText(m, x(d), B + 28));
-    g.textAlign = 'right'; [lo + pad, (lo + hi) / 2, hi - pad].forEach(v => { g.fillText(v.toFixed(mk.dec), L - 14, y(v) + 5); g.strokeStyle = '#F4EEDF'; g.beginPath(); g.moveTo(L, y(v)); g.lineTo(R, y(v)); g.stroke(); });
-    g.fillStyle = INK2; g.font = '600 18px "Barlow Condensed"'; g.textAlign = 'left'; g.fillText(mk.label.toUpperCase() + '  (' + mk.unit + ')', L, 32);
-    g.fillStyle = INK3; g.font = '500 14px "IBM Plex Mono"'; g.textAlign = 'right'; g.fillText('compared n=' + A.length + ' \u00b7 kept n=' + (pts.length - A.length) + (unmeasured ? ' \u00b7 not measured on ' + unmeasured : '') + ' \u00b7 side view metric', R, 32);
-    // compared line
-    g.strokeStyle = CAL; g.lineWidth = 3; g.beginPath(); A.forEach((r, i) => { i ? g.lineTo(x(r.day), y(r[mk.key])) : g.moveTo(x(r.day), y(r[mk.key])); }); g.stroke();
-    hit.length = 0;
-    pts.forEach(r => {
-      const px = x(r.day), py = y(r[mk.key]), on = rows.indexOf(r) === sel;
-      if (r.set === 'A') { g.fillStyle = CAL; g.beginPath(); g.arc(px, py, on ? 11 : 8, 0, Math.PI * 2); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 3; g.stroke(); }
-      else { g.strokeStyle = SLATE; g.lineWidth = 2; g.setLineDash([3, 3]); g.beginPath(); g.arc(px, py, on ? 10 : 7, 0, Math.PI * 2); g.stroke(); g.setLineDash([]); g.fillStyle = '#fff'; g.beginPath(); g.arc(px, py, on ? 7 : 4, 0, Math.PI * 2); g.fill(); }
-      if (on) { g.strokeStyle = GOLD; g.lineWidth = 3; g.beginPath(); g.arc(px, py, 17, 0, Math.PI * 2); g.stroke();
-        g.fillStyle = INK; g.font = '700 20px "Barlow Condensed"'; g.textAlign = 'center'; g.fillText(r[mk.key].toFixed(mk.dec) + ' ' + mk.unit, px, py - 26);
-        g.fillStyle = INK3; g.font = '500 13px "IBM Plex Mono"'; g.fillText(r.date + (r.set === 'A' ? '' : ' \u00b7 kept'), px, py + 38); }
-      hit.push({ x: px, y: py, i: rows.indexOf(r) });
+  const ZERO_MISSING = ['contact_time', 'velocity', 'stiffness', 'grf'];
+  const valid = (r, k) => r[k] != null && !(ZERO_MISSING.includes(k) && r[k] <= 0);
+  const multi = $('#multi'), MC = [];
+  METRICS.forEach(m => { const c = document.createElement('canvas'); c.width = 460; c.height = 250; c.className = 'gfx sm'; multi.appendChild(c); MC.push({ m, c, g: c.getContext('2d'), hit: [] }); c.addEventListener('click', e => { const o = MC.find(x => x.c === c); const rc = c.getBoundingClientRect(), mx = (e.clientX - rc.left) * c.width / rc.width, my = (e.clientY - rc.top) * c.height / rc.height; let b = null, bd = 1e9; o.hit.forEach(h => { const d = Math.hypot(h.x - mx, h.y - my); if (d < bd) { bd = d; b = h; } }); if (b && bd < 34) show(b.i); }); c.style.cursor = 'pointer'; });
+  let reveal = 0; // 0..1 animates the compared line drawing in
+  function drawMulti() {
+    MC.forEach(o => {
+      const { m, g, c } = o, W = c.width, H = c.height; g.clearRect(0, 0, W, H); g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
+      const L = 58, R = W - 18, T = 48, B = H - 34;
+      const pts = rows.filter(r => valid(r, m.key)), Ac = pts.filter(r => r.set === 'A');
+      const vals = pts.map(r => r[m.key]); let lo = Math.min(...vals), hi = Math.max(...vals); if (hi - lo < 1e-6) hi = lo + 1; const pad = (hi - lo) * .2; lo -= pad; hi += pad;
+      const x = d => L + d / 106 * (R - L), y = v => B - (v - lo) / (hi - lo) * (B - T);
+      const bmin = Math.min(...Ac.map(r => r[m.key])), bmax = Math.max(...Ac.map(r => r[m.key]));
+      g.fillStyle = GOLD2; g.fillRect(L, y(bmax), R - L, y(bmin) - y(bmax));
+      g.strokeStyle = INK2; g.lineWidth = 1.5; g.setLineDash([6, 5]); g.beginPath(); g.moveTo(L, y(REF[m.key])); g.lineTo(R, y(REF[m.key])); g.stroke(); g.setLineDash([]);
+      g.strokeStyle = LINE; g.lineWidth = 1.5; g.beginPath(); g.moveTo(L, B); g.lineTo(R, B); g.stroke();
+      g.fillStyle = INK3; font(g, 500, 11, mono); g.textAlign = 'center'; [['JAN', 0], ['FEB', 17], ['MAR', 45], ['APR', 76], ['MAY', 106]].forEach(([t, d]) => g.fillText(t, x(d), B + 18));
+      g.textAlign = 'right'; [lo + pad, hi - pad].forEach(v => g.fillText(v.toFixed(m.dec), L - 8, y(v) + 4));
+      g.fillStyle = INK; font(g, 600, 18); g.textAlign = 'left'; g.fillText(m.label.toUpperCase(), L, 24);
+      g.fillStyle = INK3; font(g, 500, 12, mono); g.fillText(m.unit, L + g.measureText(m.label.toUpperCase()).width * 1.05 + 14, 24);
+      // compared line, revealed left to right
+      g.strokeStyle = CAL; g.lineWidth = 2.5; g.beginPath();
+      const n = Ac.length, upto = Math.max(1, Math.ceil(reveal * n));
+      Ac.slice(0, upto).forEach((r, i) => { i ? g.lineTo(x(r.day), y(r[m.key])) : g.moveTo(x(r.day), y(r[m.key])); }); g.stroke();
+      o.hit = [];
+      pts.forEach(r => {
+        const px = x(r.day), py = y(r[m.key]), on = rows.indexOf(r) === sel, isA = r.set === 'A';
+        if (isA && Ac.indexOf(r) >= upto) return;
+        if (isA) { g.fillStyle = CAL; g.beginPath(); g.arc(px, py, on ? 8 : 5.5, 0, Math.PI * 2); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 2; g.stroke(); }
+        else { g.strokeStyle = SLATE; g.lineWidth = 1.5; g.setLineDash([2, 3]); g.beginPath(); g.arc(px, py, on ? 7 : 4.5, 0, Math.PI * 2); g.stroke(); g.setLineDash([]); }
+        if (on) { g.strokeStyle = GOLD; g.lineWidth = 2.5; g.beginPath(); g.arc(px, py, 13, 0, Math.PI * 2); g.stroke(); g.fillStyle = INK; font(g, 700, 17); g.textAlign = px > R - 70 ? 'right' : 'center'; g.fillText(r[m.key].toFixed(m.dec) + ' ' + m.unit, px, py - 19); }
+        o.hit.push({ x: px, y: py, i: rows.indexOf(r) });
+      });
+      if (reveal >= 1) { const d = LAST[m.key] - REF[m.key]; g.fillStyle = CAL; font(g, 700, 15); g.textAlign = 'right'; g.fillText((d > 0 ? '+' : '') + d.toFixed(m.dec) + ' vs Jan', R, 24); }
     });
-    // delta callout (last compared vs baseline)
-    const last = A[A.length - 1], d = last[mk.key] - base[mk.key];
-    const good = mk.better === 'lower' ? d < 0 : mk.better === 'higher' ? d > 0 : null;
-    g.fillStyle = CAL; g.font = '700 22px "Barlow Condensed"'; g.textAlign = 'right';
-    g.fillText((d > 0 ? '+' : '') + d.toFixed(mk.dec) + ' ' + mk.unit + ' vs Jan, by ' + last.date, R, B + 60);
-    g.fillStyle = INK3; g.font = '500 14px "IBM Plex Mono"'; g.textAlign = 'left'; g.fillText('observed change on compared captures only \u00b7 not a verdict', L, B + 60);
   }
-  cv.addEventListener('click', e => {
-    const rct = cv.getBoundingClientRect(), mx = (e.clientX - rct.left) * cv.width / rct.width, my = (e.clientY - rct.top) * cv.height / rct.height;
-    let best = null, bd = 1e9; hit.forEach(h => { const d = Math.hypot(h.x - mx, h.y - my); if (d < bd) { bd = d; best = h; } });
-    if (best && bd < 40) { show(best.i); }
-  });
-  cv.style.cursor = 'pointer';
+  onceVisible(multi, () => anim(1800, p => { reveal = p; drawMulti(); }), 0.2);
+  drawMulti();
+
+  /* ================= RADAR: baseline vs selected, scaled to his own compared range ================= */
+  const rc = $('#radar'), rg = rc.getContext('2d');
+  let radarP = 0;
+  function drawRadar() {
+    const W = rc.width, H = rc.height, cx = W / 2, cy = H / 2 + 6, RAD = Math.min(W, H) * .33; rg.clearRect(0, 0, W, H); rg.fillStyle = '#fff'; rg.fillRect(0, 0, W, H);
+    const n = METRICS.length, r = rows[sel];
+    const norm = (m, v) => { const vs = A.map(a => a[m.key]); const lo = Math.min(...vs), hi = Math.max(...vs); return hi - lo < 1e-9 ? .5 : Math.max(0, Math.min(1, (v - lo) / (hi - lo))); };
+    const P = (i, t) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [cx + Math.cos(a) * RAD * (0.12 + 0.88 * t), cy + Math.sin(a) * RAD * (0.12 + 0.88 * t)]; };
+    // grid
+    [0.25, .5, .75, 1].forEach(t => { rg.strokeStyle = LINE; rg.lineWidth = 1; rg.beginPath(); for (let i = 0; i <= n; i++) { const [x, y] = P(i % n, t); i ? rg.lineTo(x, y) : rg.moveTo(x, y); } rg.stroke(); });
+    for (let i = 0; i < n; i++) { const [x, y] = P(i, 1); rg.strokeStyle = LINE; rg.beginPath(); rg.moveTo(cx, cy); rg.lineTo(x, y); rg.stroke(); }
+    // baseline polygon
+    rg.strokeStyle = INK2; rg.lineWidth = 2; rg.setLineDash([6, 5]); rg.beginPath(); METRICS.forEach((m, i) => { const [x, y] = P(i, norm(m, REF[m.key])); i ? rg.lineTo(x, y) : rg.moveTo(x, y); }); rg.closePath(); rg.stroke(); rg.setLineDash([]);
+    // selected polygon
+    const ok = METRICS.every(m => valid(r, m.key));
+    if (ok) {
+      rg.beginPath(); METRICS.forEach((m, i) => { const t = norm(m, r[m.key]) * radarP; const [x, y] = P(i, t); i ? rg.lineTo(x, y) : rg.moveTo(x, y); }); rg.closePath();
+      rg.fillStyle = r.set === 'A' ? 'rgba(0,50,98,.16)' : 'rgba(122,138,146,.14)'; rg.fill(); rg.strokeStyle = r.set === 'A' ? CAL : SLATE; rg.lineWidth = 3; if (r.set !== 'A') rg.setLineDash([4, 4]); rg.stroke(); rg.setLineDash([]);
+      METRICS.forEach((m, i) => { const [x, y] = P(i, norm(m, r[m.key]) * radarP); rg.fillStyle = r.set === 'A' ? CAL : SLATE; rg.beginPath(); rg.arc(x, y, 5, 0, Math.PI * 2); rg.fill(); });
+    }
+    // labels with values
+    METRICS.forEach((m, i) => { const [x, y] = P(i, 1.32); rg.textAlign = x < cx - 10 ? 'right' : x > cx + 10 ? 'left' : 'center'; rg.fillStyle = INK; font(rg, 600, 15); rg.fillText(m.label.toUpperCase(), x, y - 6); rg.fillStyle = valid(r, m.key) ? (r.set === 'A' ? CAL : SLATE) : INK3; font(rg, 500, 14, mono); rg.fillText(valid(r, m.key) ? r[m.key].toFixed(m.dec) + ' ' + m.unit : 'not measured', x, y + 13); rg.fillStyle = INK3; font(rg, 500, 11, mono); rg.fillText('ref ' + REF[m.key].toFixed(m.dec), x, y + 29); });
+    rg.fillStyle = INK2; font(rg, 600, 15); rg.textAlign = 'left'; rg.fillText((r.set === 'A' ? 'COMPARED CAPTURE  \u00b7  ' : 'KEPT, NOT COMPARED  \u00b7  ') + r.date.toUpperCase(), 18, 26);
+    rg.fillStyle = INK3; font(rg, 500, 11, mono); rg.textAlign = 'right'; rg.fillText('dashed = Jan reference \u00b7 axes scaled to his own compared range', W - 18, H - 14);
+    if (!ok) { rg.fillStyle = INK3; font(rg, 500, 13, mono); rg.textAlign = 'center'; rg.fillText('side-view metrics not measured from this camera', cx, cy + 4); }
+  }
+  onceVisible(rc, () => anim(1000, p => { radarP = p; drawRadar(); }));
+  drawRadar();
+
+  /* ================= ASYMMETRY butterflies: L vs R, all 14 captures ================= */
+  (function () {
+    const c = $('#asym'), g = c.getContext('2d'), W = c.width, H = c.height;
+    const ROWS = [{ t: 'KNEE COLLAPSE', l: 'knee_collapse_l', r: 'knee_collapse_r', unit: 'ratio', dec: 2 }, { t: 'GROUND CONTACT', l: 'contact_l', r: 'contact_r', unit: 's', dec: 2 }, { t: 'ACHILLES LOAD INDEX', l: 'achilles_l', r: 'achilles_r', unit: 'ALI', dec: 2 }];
+    let p = 0;
+    function draw() {
+      g.clearRect(0, 0, W, H); g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
+      const colW = (W - 200) / rows.length, top = 70, bandH = (H - top - 40) / ROWS.length;
+      g.fillStyle = INK3; font(g, 500, 12, mono); g.textAlign = 'center';
+      rows.forEach((r, i) => { const x = 170 + i * colW + colW / 2; g.fillText(r.date.replace(' ', ''), x, 44); if (r.set !== 'A') { g.fillStyle = '#F6F1E6'; g.fillRect(170 + i * colW + 2, top - 8, colW - 4, H - top - 30); g.fillStyle = INK3; } });
+      ROWS.forEach((row, k) => {
+        const y0 = top + k * bandH, mid = y0 + bandH / 2 - 6, maxV = Math.max(...rows.flatMap(r => [r[row.l] || 0, r[row.r] || 0])) || 1, sc = (bandH / 2 - 26) / maxV;
+        g.fillStyle = INK; font(g, 600, 15); g.textAlign = 'left'; g.fillText(row.t, 18, y0 + 12);
+        g.fillStyle = INK3; font(g, 500, 11, mono); g.fillText('L up \u00b7 R down \u00b7 ' + row.unit, 18, y0 + 30);
+        g.strokeStyle = LINE; g.beginPath(); g.moveTo(160, mid); g.lineTo(W - 20, mid); g.stroke();
+        rows.forEach((r, i) => {
+          const lv = r[row.l], rv = r[row.r]; if (lv == null || rv == null || (lv <= 0 && rv <= 0)) return;
+          const x = 170 + i * colW + colW / 2, bw = Math.min(26, colW * .5), on = i === sel;
+          g.fillStyle = r.set === 'A' ? CAL : SLATE; g.fillRect(x - bw / 2, mid - lv * sc * p, bw, lv * sc * p);
+          g.fillStyle = r.set === 'A' ? '#6E8FB5' : '#B4BEC4'; g.fillRect(x - bw / 2, mid, bw, rv * sc * p);
+          if (on) { g.strokeStyle = GOLD; g.lineWidth = 2.5; g.strokeRect(x - bw / 2 - 5, mid - lv * sc - 5, bw + 10, (lv + rv) * sc + 10); g.fillStyle = INK; font(g, 700, 13, mono); g.textAlign = 'center'; g.fillText('L ' + lv.toFixed(row.dec), x, mid - lv * sc - 10); g.fillText('R ' + rv.toFixed(row.dec), x, mid + rv * sc + 16); }
+        });
+      });
+      g.fillStyle = INK2; font(g, 600, 15); g.textAlign = 'left'; g.fillText('LEFT VS RIGHT, EVERY CAPTURE', 18, 22);
+      g.fillStyle = INK3; font(g, 500, 11, mono); g.textAlign = 'right'; g.fillText('blue = compared set \u00b7 grey on shaded = kept, filmed differently \u00b7 values as exported per session', W - 20, 22);
+    }
+    onceVisible(c, () => anim(1100, q => { p = q; draw(); })); draw();
+    c.addEventListener('click', e => { const rc2 = c.getBoundingClientRect(), mx = (e.clientX - rc2.left) * c.width / rc2.width; const colW = (W - 200) / rows.length; const i = Math.floor((mx - 170) / colW); if (i >= 0 && i < rows.length) show(i); });
+    c.style.cursor = 'pointer';
+    window.__asymRedraw = draw;
+  })();
+
+  /* ================= comparison table + copy ================= */
   const CMP = [['Velocity', 'velocity', 'm/s', 2], ['Ground contact', 'contact_time', 's', 2], ['Vertical stiffness', 'stiffness', 'kN/m', 1]];
   function cmpTable() {
-    const A = rows.filter(r => r.set === 'A'), ref = A[0], r = rows[sel];
-    $('#cmpRefD').textContent = ref.date + ' \u00b7 compared'; $('#cmpSelD').textContent = r.date + (r.set === 'A' ? ' \u00b7 compared' : ' \u00b7 kept, not compared');
+    const r = rows[sel];
+    $('#cmpRefD').textContent = REF.date + ' \u00b7 compared'; $('#cmpSelD').textContent = r.date + (r.set === 'A' ? ' \u00b7 compared' : ' \u00b7 kept, not compared');
     const tb = $('#cmp tbody'); tb.innerHTML = '';
     CMP.forEach(([lab, key, unit, dec]) => {
-      const tr = document.createElement('tr'); const ok = r[key] != null && r[key] > 0;
-      const refv = ref[key].toFixed(dec) + ' ' + unit, selv = ok ? r[key].toFixed(dec) + ' ' + unit : 'not measured from this view';
-      const d = (ok && r.set === 'A') ? ((r[key] - ref[key] > 0 ? '+' : '') + (r[key] - ref[key]).toFixed(dec) + ' ' + unit) : (ok ? 'not compared (gate)' : '');
-      tr.innerHTML = '<td>' + lab + '</td><td>' + refv + '</td><td' + (ok ? '' : ' class="na"') + '>' + selv + '</td><td class="' + ((ok && r.set === 'A') ? 'd' : 'na') + '">' + d + '</td>';
-      tb.appendChild(tr);
+      const tr = document.createElement('tr'); const ok = valid(r, key);
+      const refv = REF[key].toFixed(dec) + ' ' + unit, selv = ok ? r[key].toFixed(dec) + ' ' + unit : 'not measured from this view';
+      const d = (ok && r.set === 'A') ? ((r[key] - REF[key] > 0 ? '+' : '') + (r[key] - REF[key]).toFixed(dec) + ' ' + unit) : (ok ? 'not compared (gate)' : '');
+      tr.innerHTML = '<td>' + lab + '</td><td>' + refv + '</td><td' + (ok ? '' : ' class="na"') + '>' + selv + '</td><td class="' + ((ok && r.set === 'A') ? 'd' : 'na') + '">' + d + '</td>'; tb.appendChild(tr);
     });
-    const l = A[A.length - 1];
-    $('#driftCopy').textContent = 'On the five comparable captures, ground contact went from ' + ref.contact_time.toFixed(2) + ' s in January to ' + l.contact_time.toFixed(2) + ' s by ' + l.date + ', with velocity between ' + Math.min(...A.map(x => x.velocity)).toFixed(1) + ' and ' + Math.max(...A.map(x => x.velocity)).toFixed(1) + ' m/s across the season. The trainer sees the direction with the film beside it; what it means for this athlete is the trainer\u2019s call.';
   }
-  cmpTable();
 
-  /* ---------- season strip + player (drives the chart selection too) ---------- */
+  /* ================= season strip + player ================= */
   const strip = $('#strip'), sv = $('#season'), tag = $('#seasonTag'), meta = $('#seasonMeta'), note = $('#seasonNote');
   sv.playbackRate = 0.5;
   function show(i) {
-    const c = SEASON[i], r = rows[i];
+    const c = SEASON[i], r = rows[i]; sel = i;
     $$('#strip a').forEach((a, k) => a.classList.toggle('on', k === i));
     tag.textContent = c.date + ' \u00b7 ' + c.view; meta.textContent = c.fps + ' fps \u00b7 ' + c.orient;
     note.textContent = c.set === 'A' ? 'Compared: side, near, sprint \u00b7 recorded confidence ' + r.confidence.toFixed(2) : 'Kept and labelled: ' + c.reason + '.';
-    sv.src = 'data:video/mp4;base64,' + c.mp4; sv.load();
-    sv.onloadedmetadata = () => { if (sv.duration > 3) sv.currentTime = sv.duration * 0.35; sv.play().catch(() => {}); };
-    sel = i; drawDrift(); cmpTable();
+    sv.src = 'data:video/mp4;base64,' + c.mp4; sv.load(); sv.onloadedmetadata = () => { if (sv.duration > 3) sv.currentTime = sv.duration * 0.35; sv.play().catch(() => {}); };
+    drawMulti(); radarP = 1; drawRadar(); cmpTable(); if (window.__asymRedraw) window.__asymRedraw();
   }
-  SEASON.forEach((c, i) => {
-    const a = document.createElement('a'); a.href = '#seasonBox'; a.className = (c.set === 'A' ? 'setA' : 'kept');
-    a.innerHTML = '<img alt="" src="data:image/jpeg;base64,' + c.poster + '"><span class="pill"></span><span class="d">' + c.date + '</span><span class="g">' + c.label + '</span>';
-    a.onclick = e => { e.preventDefault(); show(i); }; strip.appendChild(a);
-  });
+  SEASON.forEach((c, i) => { const a = document.createElement('a'); a.href = '#seasonBox'; a.className = (c.set === 'A' ? 'setA' : 'kept'); a.innerHTML = '<img alt="" src="data:image/jpeg;base64,' + c.poster + '"><span class="pill"></span><span class="d">' + c.date + '</span><span class="g">' + c.label + '</span>'; a.onclick = e => { e.preventDefault(); show(i); }; strip.appendChild(a); });
   $$('#seasonSpeed button').forEach(b => b.onclick = () => { $$('#seasonSpeed button').forEach(x => x.classList.remove('on')); b.classList.add('on'); sv.playbackRate = +b.dataset.r; });
+  $$('[data-jump]').forEach(b => b.onclick = () => show(b.dataset.jump === 'ref' ? rows.indexOf(REF) : rows.indexOf(LAST)));
   show(sel);
 
-  /* ---------- floor chart: department baseline, today vs day 90 ---------- */
-  (function drawFloor() {
-    const c = $('#floor'), k = c.getContext('2d'), W = c.width, H = c.height; k.fillStyle = '#fff'; k.fillRect(0, 0, W, H);
-    const cols = [{ x: 60, w: 500, t: 'TODAY', sub: 'whoever is holding the phone' }, { x: 640, w: 500, t: 'DAY 90', sub: 'one protocol, every trainer, every athlete' }];
-    k.fillStyle = INK3; k.font = '500 14px "IBM Plex Mono"'; k.textAlign = 'right'; k.fillText('illustration of the rollout, not measured Cal data', W - 20, H - 16);
-    // deterministic pseudo-random for the "today" scatter (seeded), so the picture is stable
-    let seed = 7; const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
-    const teams = [['Football', 105], ['Program two', 95]];
-    cols.forEach((col, ci) => {
-      k.fillStyle = INK2; k.font = '700 26px "Barlow Condensed"'; k.textAlign = 'left'; k.fillText(col.t, col.x, 44);
-      k.fillStyle = INK3; k.font = '500 15px "IBM Plex Mono"'; k.fillText(col.sub, col.x, 68);
-      let y0 = 120;
-      teams.forEach(([name, n]) => {
-        k.fillStyle = INK3; k.font = '600 15px "Barlow Condensed"'; k.fillText(name.toUpperCase() + '  \u00b7  ' + n + ' athletes', col.x, y0 - 10);
-        const per = 15, rowsN = Math.ceil(n / per), dotW = col.w / per;
-        for (let i = 0; i < n; i++) {
-          const cx = col.x + (i % per) * dotW + dotW / 2, cy = y0 + Math.floor(i / per) * 30 + 12;
-          if (ci === 0) {
-            const r = rnd(); // today: most athletes have no baseline; a few have one; reads differ by trainer
-            if (r < 0.72) { k.strokeStyle = LINE; k.lineWidth = 1.5; k.beginPath(); k.arc(cx, cy, 9, 0, Math.PI * 2); k.stroke(); }
-            else if (r < 0.9) { k.fillStyle = SLATE; k.beginPath(); k.arc(cx, cy, 9, 0, Math.PI * 2); k.fill(); }
-            else { k.fillStyle = GOLD; k.beginPath(); k.arc(cx, cy, 9, 0, Math.PI * 2); k.fill(); }
-          } else {
-            k.fillStyle = CAL; k.beginPath(); k.arc(cx, cy, 9, 0, Math.PI * 2); k.fill();
-          }
-        }
-        y0 += rowsN * 30 + 48;
-      });
-    });
-    // legend
-    k.font = '500 14px "IBM Plex Mono"'; k.textAlign = 'left';
-    function leg(x, ly, fill, stroke, txt) { if (fill) { k.fillStyle = fill; k.beginPath(); k.arc(x, ly - 5, 7, 0, Math.PI * 2); k.fill(); } else { k.strokeStyle = stroke; k.lineWidth = 1.5; k.beginPath(); k.arc(x, ly - 5, 7, 0, Math.PI * 2); k.stroke(); } k.fillStyle = INK2; k.fillText(txt, x + 16, ly); }
-    const ly = H - 66;
-    leg(60, ly, null, LINE, 'no baseline on record'); leg(330, ly, SLATE, null, 'a read, by one trainer'); leg(60, ly + 26, GOLD, null, 'a read that differs by trainer');
-    leg(640, ly, CAL, null, 'own baseline, one protocol, the same read from every trainer');
+  /* ================= FAST: the race ================= */
+  (function () {
+    const c = $('#race'), g = c.getContext('2d'), W = c.width, H = c.height;
+    const steps = ['Watch it back', 'Measure by eye', 'Write it up', 'File it', 'Find last month\u2019s'];
+    function draw(p) {
+      g.clearRect(0, 0, W, H); g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
+      const L = 200, R = W - 40, y1 = 86, y2 = 196, h = 34;
+      g.fillStyle = INK; font(g, 600, 20); g.textAlign = 'left'; g.fillText('TODAY', 30, y1 + 6); g.fillStyle = INK3; font(g, 500, 12, mono); g.fillText('after the trainer films', 30, y1 + 26);
+      g.fillStyle = INK; font(g, 600, 20); g.fillText('WITH COURO', 30, y2 + 6); g.fillStyle = INK3; font(g, 500, 12, mono); g.fillText('proposed same-day commitment', 30, y2 + 26);
+      g.fillStyle = '#F6F1E6'; g.fillRect(L, y1 - h / 2, R - L, h); g.fillRect(L, y2 - h / 2, R - L, h);
+      const segW = (R - L) / steps.length, tp = Math.min(1, p / 0.9);
+      steps.forEach((s, i) => { const f = Math.max(0, Math.min(1, tp * steps.length - i)); g.fillStyle = SLATE; g.fillRect(L + i * segW + 2, y1 - h / 2, (segW - 4) * f, h); g.fillStyle = f >= 1 ? '#fff' : INK2; font(g, 600, 14); g.textAlign = 'center'; g.fillText(s.toUpperCase(), L + i * segW + segW / 2, y1 + 5); });
+      const cf = Math.min(1, p / 0.18); g.fillStyle = EM; g.fillRect(L + 2, y2 - h / 2, (R - L - 4) * cf, h);
+      if (cf >= 1) { g.fillStyle = '#fff'; font(g, 600, 15); g.textAlign = 'center'; g.fillText('CAPTURE  \u2192  REVIEW THE FLAG  \u2192  REPORT IN THE AMS, THE SAME DAY', (L + R) / 2, y2 + 5); }
+      g.fillStyle = INK3; font(g, 500, 12, mono); g.textAlign = 'right'; g.fillText('five hand steps by the trainer vs zero \u00b7 illustrative sequence, not timed', R, H - 14);
+      g.fillStyle = tp >= 1 ? INK2 : INK3; font(g, 700, 15); g.textAlign = 'left'; g.fillText('5 steps by hand', L, y1 - 30); g.fillStyle = EM; g.fillText('0 steps by hand', L, y2 - 30);
+    }
+    onceVisible(c, () => anim(3200, draw)); draw(0);
   })();
 
-  /* ---------- tour ---------- */
+  /* ================= FLOOR: animated rollout ================= */
+  (function () {
+    const c = $('#floor'), k = c.getContext('2d'), W = c.width, H = c.height, slider = $('#floorDay'), lab = $('#floorLab');
+    let seed = 7; const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    const teams = [['Football', 105], ['Program two', 95]];
+    const dots = []; teams.forEach(([name, n], ti) => { for (let i = 0; i < n; i++) { const r = rnd(); dots.push({ ti, i, state: r < 0.72 ? 0 : r < 0.9 ? 1 : 2, capDay: 1 + Math.floor(rnd() * 30) }); } });
+    function draw(day) {
+      k.clearRect(0, 0, W, H); k.fillStyle = '#fff'; k.fillRect(0, 0, W, H);
+      const per = 21, dotW = (W - 120) / per; let y0 = 90, have = 0;
+      teams.forEach(([name, n], ti) => {
+        k.fillStyle = INK3; font(k, 600, 15); k.textAlign = 'left'; k.fillText(name.toUpperCase() + '  \u00b7  ' + n + ' athletes', 60, y0 - 12);
+        dots.filter(d => d.ti === ti).forEach(d => {
+          const cx = 60 + (d.i % per) * dotW + dotW / 2, cy = y0 + Math.floor(d.i / per) * 30 + 12;
+          const own = day >= d.capDay; if (own) have++;
+          if (own) { k.fillStyle = CAL; k.beginPath(); k.arc(cx, cy, 9, 0, Math.PI * 2); k.fill(); if (day >= 60) { k.fillStyle = '#fff'; k.beginPath(); k.arc(cx, cy, 3, 0, Math.PI * 2); k.fill(); } }
+          else if (d.state === 0) { k.strokeStyle = LINE; k.lineWidth = 1.5; k.beginPath(); k.arc(cx, cy, 9, 0, Math.PI * 2); k.stroke(); }
+          else if (d.state === 1) { k.fillStyle = SLATE; k.beginPath(); k.arc(cx, cy, 9, 0, Math.PI * 2); k.fill(); }
+          else { k.fillStyle = GOLD; k.beginPath(); k.arc(cx, cy, 9, 0, Math.PI * 2); k.fill(); }
+        });
+        y0 += Math.ceil(n / per) * 30 + 46;
+      });
+      k.fillStyle = INK; font(k, 700, 34); k.textAlign = 'left'; k.fillText('DAY ' + day, 60, 46);
+      k.fillStyle = CAL; font(k, 700, 34); k.textAlign = 'right'; k.fillText(have + ' of 200', W - 60, 46);
+      k.fillStyle = INK3; font(k, 500, 13, mono); k.fillText(day >= 90 ? 'own baseline \u00b7 drift flags \u00b7 team view' : day >= 60 ? 'own baseline \u00b7 same read from any trainer' : day >= 30 ? 'captured once, report back same day' : 'with their own baseline on record', W - 60, 68);
+      const ly = H - 40; font(k, 500, 13, mono); k.textAlign = 'left';
+      function leg(x, fill, stroke, txt) { if (fill) { k.fillStyle = fill; k.beginPath(); k.arc(x, ly - 5, 7, 0, Math.PI * 2); k.fill(); } else { k.strokeStyle = stroke; k.lineWidth = 1.5; k.beginPath(); k.arc(x, ly - 5, 7, 0, Math.PI * 2); k.stroke(); } k.fillStyle = INK2; k.fillText(txt, x + 16, ly); }
+      leg(60, null, LINE, 'no baseline on record'); leg(300, SLATE, null, 'a read, by one trainer'); leg(540, GOLD, null, 'a read that differs by trainer'); leg(820, CAL, null, 'own baseline, one protocol');
+      k.fillStyle = INK3; k.textAlign = 'right'; k.fillText('illustration of the rollout, not measured Cal data', W - 20, H - 14);
+      if (lab) lab.textContent = 'Day ' + day;
+    }
+    slider.addEventListener('input', () => draw(+slider.value));
+    onceVisible(c, () => anim(3000, p => { const d = Math.round(p * 90); slider.value = d; draw(d); })); draw(0);
+  })();
+
+  /* ================= tour ================= */
   const TOUR = [
-    { el: '#board', t: 'The read', b: 'Same rep at full speed looks fine. Frame by frame at stance: 4\u00b0 left, 10.3\u00b0 right, a 6.3\u00b0 gap, flagged for a person to read. This frontal-plane measurement is one Cal\u2019s lab can validate. The trainer decides.' },
-    { el: '#drift', t: '01 \u00b7 Drift', b: 'A whole season on one phone. Blue points are compared against his own band; grey ones were filmed differently and are kept, not charted. Click a point to play that capture. Switch the metric.' },
-    { el: '#b2 .speed', t: '02 \u00b7 Fast', b: 'Five steps by hand today. Zero with Couro: capture, review, report. Same-day delivery is the Day 30 commitment in the terms.' },
-    { el: '#floor', t: '03 \u00b7 Raise the floor', b: 'Today the baseline is whoever is holding the phone. By day 90, 200 athletes have their own reference capture and every trainer scores against the same protocol. Below: which measurements are validated, and the two Cal can help test.' },
+    { el: '#board', t: 'The read', b: 'Same rep at full speed looks fine. At stance: 4\u00b0 left, 10.3\u00b0 right, a 6.3\u00b0 gap, flagged for a person to read. This frontal-plane measurement is one Cal\u2019s lab can validate. The trainer decides.' },
+    { el: '#multi', t: '01 \u00b7 Drift, six metrics', b: 'A whole season on one phone. Blue = compared against his own band; grey = filmed differently, kept, not charted. Click any point to play that capture.' },
+    { el: '#radar', t: '01 \u00b7 Profile vs reference', b: 'Dashed is January. Blue is the selected capture. Axes are scaled to his own compared range, not a roster norm.' },
+    { el: '#asym', t: '01 \u00b7 Left vs right', b: 'Every capture, left up and right down. The kind of asymmetry the trainer is watching after surgery, on a season of ordinary film.' },
+    { el: '#race', t: '02 \u00b7 Fast', b: 'Five steps by hand today. Zero with Couro: capture, review, report. Same-day delivery is the Day 30 commitment in the terms.' },
+    { el: '#floor', t: '03 \u00b7 Raise the floor', b: 'Drag the day. Today the baseline is whoever is holding the phone. By day 90, 200 athletes have their own reference and every trainer scores the same protocol.' },
     { el: '#b4 .steps', t: '04 \u00b7 Today', b: 'Which program joins football, a staff lead and a baseline window, a lab contact and date range, an intro to IT and procurement.' }
   ];
   let ti = -1, ringEl = null; const tour = $('#tour');
