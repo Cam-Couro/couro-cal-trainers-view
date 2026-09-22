@@ -142,7 +142,9 @@ canvas.gfx{width:100%;height:auto;display:block;background:#fff;border-radius:16
 @media(max-width:900px){.multi{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.multi{grid-template-columns:1fr}}
 canvas.gfx.sm{border-radius:14px}
-.review{display:grid;grid-template-columns:.8fr .8fr 1.4fr;gap:18px;margin-top:26px;align-items:start}
+.review{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;margin-top:26px;align-items:start}
+.pairfilms{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:1000px){.review{grid-template-columns:1fr}}
 @media(max-width:1000px){.review{grid-template-columns:1fr 1fr}.review .rvside{grid-column:1/-1}}
 @media(max-width:600px){.review{grid-template-columns:1fr}}
 .rvside{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 22px;display:grid;gap:14px;align-content:start}
@@ -263,7 +265,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
       <canvas id="dials" width="800" height="330" style="width:100%;height:auto;display:block"></canvas>
       <div class="foot">
         <span class="stamp gold">Review flag</span>
-        <span class="stamp cal">Validated vs motion capture: 14 of 23 metric-view slots Good, 10 Tier 1</span>
+        <span class="stamp cal">Measured against marker-based motion capture</span>
         <button class="btn small" id="evBtn">See the frames and the report</button>
       </div>
     </div>
@@ -289,11 +291,18 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
   <div class="hd"><h2>The season had a moment. Here it is, on film.</h2></div>
   <p class="why">Couro reads every capture against the athlete's own reference and surfaces the one that moved most. Here: ground contact shortened 43% between January and 10 April while velocity rose. Change, not a verdict; the trainer goes to the film. Five captures support comparison; nine remain available as film.</p>
   <div class="review" id="review">
-    <div class="rv">
-      <div class="player" style="aspect-ratio:3/4"><video id="rvRef" autoplay playsinline muted loop preload="auto"></video><span class="tag">Reference &middot; 15 Jan</span><span class="tag right">compared</span></div>
-    </div>
-    <div class="rv">
-      <div class="player" style="aspect-ratio:3/4"><video id="rvSel" autoplay playsinline muted loop preload="auto"></video><span class="tag" id="rvSelTag">Drift moment &middot; 10 Apr</span><span class="tag right" id="rvSelSet">compared</span></div>
+    <div class="rv pair">
+      <div class="pairfilms">
+        <div class="player" style="aspect-ratio:3/4"><video id="rvRef" autoplay playsinline muted loop preload="auto"></video><canvas class="ov" id="rvRefOv"></canvas><span class="tag">Reference &middot; 15 Jan</span><span class="tag right" id="rvRefT">0.00 s</span></div>
+        <div class="player" style="aspect-ratio:3/4"><video id="rvSel" playsinline muted loop preload="auto"></video><canvas class="ov" id="rvSelOv"></canvas><span class="tag" id="rvSelTag">Drift moment &middot; 10 Apr</span><span class="tag right" id="rvSelSet">compared</span></div>
+      </div>
+      <div class="ctl" style="margin-top:12px">
+        <div class="seg small" id="pairSpeed"><button data-r="0.25">&frac14;</button><button data-r="0.5" class="on">&frac12; speed</button><button data-r="1">Real time</button></div>
+        <button class="btn small" id="pairPlay">Pause both</button><button class="btn small" id="pairStepB">&minus;1</button><button class="btn small" id="pairStepF">+1 frame</button>
+        <span class="meta" id="pairNote">one clock, both films &middot; drift-corrected every frame</span>
+      </div>
+      <div class="scrub"><input type="range" id="pairScrub" min="0" max="1000" value="0" step="1" aria-label="Scrub both films"></div>
+      <canvas class="gfx" id="pairData" width="1000" height="150" style="margin-top:10px"></canvas>
     </div>
     <div class="rvside">
       <div class="rvhead" id="rvHead">The drift moment.</div>
@@ -356,13 +365,13 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
       <div class="st"><div><b>Day 90 &middot; the floor is visible</b><span>Drift flags against each athlete's own baseline, return-to-play comparisons, a semester-to-date team view across both programs.</span></div></div>
     </div>
   </div>
-  <div class="hd" style="margin-top:44px"><h3 style="font-size:clamp(26px,2.6vw,34px)">Validated against motion capture, angle by angle. This is also the capture guide.</h3></div>
+  <div class="hd" style="margin-top:44px"><h3 style="font-size:clamp(26px,2.6vw,34px)">Agreement with motion capture, angle by angle. This is also the capture guide.</h3></div>
   <p class="why" style="font-size:16.5px;margin-top:8px">Each cell is one measurement from one camera position, scored against a marker-based lab on real single-phone footage: Lin's concordance and the 95% limits of agreement. Filled blue passes the standard bar; dark blue is Tier 1. A trainer reads it as: film knee, hip and trunk from the side; film hip adduction from the front-oblique.</p>
   <canvas class="gfx" id="valid" width="1400" height="560" style="margin-top:18px"></canvas>
-  <div class="hd" style="margin-top:44px"><h3 style="font-size:clamp(26px,2.6vw,34px)">Validated against motion capture. Cal's lab extends the set.</h3></div>
-  <table class="cmp ev" style="margin-top:16px"><thead><tr><th>Measurement</th><th>Evidence today</th><th>With Cal's lab</th></tr></thead><tbody>
-    <tr><td>Knee flexion, hip flexion, lumbar, ankle</td><td><span class="stamp em">Validated</span> &nbsp;vs marker-based motion capture: 14 of 23 metric-view slots Good (CCC &gt; 0.60, LoA &lt; &plusmn;10&deg;), 10 Tier 1</td><td>Control set: reproduce on Cal's equipment</td></tr>
-    <tr><td>Frontal-plane hip (adduction)</td><td><span class="stamp em">Validated</span> &nbsp;Tier 1 in two views (CCC 0.96 front-oblique, 0.95 side)</td><td>Extend the frontal-plane set to the knee: drop jump, single-leg landing, cutting</td></tr>
+  <div class="hd" style="margin-top:44px"><h3 style="font-size:clamp(26px,2.6vw,34px)">What the lab set covers today, and what Cal's lab adds.</h3></div>
+  <table class="cmp ev" style="margin-top:16px"><thead><tr><th>Measurement</th><th>Lab agreement today</th><th>With Cal's lab</th></tr></thead><tbody>
+    <tr><td>Knee flexion, hip flexion, lumbar, ankle</td><td><span class="stamp cal">In the set</span> &nbsp;14 of 23 metric-view slots pass the standard agreement bar (CCC &gt; 0.60, LoA &lt; &plusmn;10&deg;), 10 at Tier 1</td><td>Control set: reproduce on Cal's equipment</td></tr>
+    <tr><td>Frontal-plane hip (adduction)</td><td><span class="stamp cal">In the set</span> &nbsp;Tier 1 in two views (CCC 0.96 front-oblique, 0.95 side)</td><td>Extend the frontal-plane set to the knee: drop jump, single-leg landing, cutting</td></tr>
     <tr><td>Frontal-plane knee, shoulder to pelvis rotation</td><td><span class="stamp cal">Next</span> &nbsp;the two measurements the current lab set does not cover</td><td>Cal's lab adds them: a rotational sport movement, a landing block, 12 to 20 athletes</td></tr>
   </tbody></table>
   <p class="why" style="font-size:16.5px;margin-top:14px">One or two sessions, 12 to 20 athletes across a range of movement quality, marker exports and a sync event from the lab. Couro brings the phones, protocol, pipeline and analysis. Cal keeps the paired, de-identified dataset and co-authors the result.</p>
@@ -377,7 +386,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
     <div class="steps blue">
       <div class="st"><div><b>Which program joins football to make the 200</b><span>Your call. We'd recommend a women's team, so every capture also feeds the Women's Health and Performance Initiative.</span></div></div>
       <div class="st"><div><b>A staff lead on the protocol, and a first baseline window</b><span>Inside the first 30 days, during reps your staff already run.</span></div></div>
-      <div class="st"><div><b>A lab contact and a date range for the validation capture</b><span>One or two sessions. Marker exports and a sync event are all we need from the lab side.</span></div></div>
+      <div class="st"><div><b>A lab contact and a date range for the paired capture</b><span>One or two sessions. Marker exports and a sync event are all we need from the lab side.</span></div></div>
       <div class="st"><div><b>An introduction to IT and procurement</b><span>So the privacy review (FERPA-aligned controls, HECVAT ready) runs in parallel with the protocol work.</span></div></div>
     </div>
     <div>
@@ -400,11 +409,11 @@ footer{border-top:1px solid var(--line);padding:26px 0 56px;display:flex;justify
     <summary><span class="btn">How we know, and where we stop</span><span class="meta">one paragraph, the gate, and the boundary</span></summary>
     <div class="in">
       <h3>How we know</h3>
-      <p>Couro reconstructs the body in three dimensions from ordinary phone video. Joint angles from real single-camera footage were compared against marker-based motion capture across 23 metric-and-view slots (knee, hip flexion, hip adduction, lumbar, ankle; five camera angles). 14 slots pass the standard biomechanics validity bar (Lin's concordance above 0.60 and Bland-Altman limits of agreement inside plus or minus 10 degrees) and 10 reach Tier 1 (concordance 0.79 or higher). The full per-slot table is drawn in beat 03; it doubles as the capture guide.</p>
+      <p>Couro reconstructs the body in three dimensions from ordinary phone video. Joint angles from real single-camera footage were compared against marker-based motion capture across 23 metric-and-view slots (knee, hip flexion, hip adduction, lumbar, ankle; five camera angles). 14 slots pass the standard biomechanics agreement bar (Lin's concordance above 0.60 and Bland-Altman limits of agreement inside plus or minus 10 degrees) and 10 reach Tier 1 (concordance 0.79 or higher). The full per-slot table is drawn in beat 03; it doubles as the capture guide.</p>
       <h3>The gate</h3>
       <p>Two captures are compared only when they share the same athlete, the same task, the same view and a similar framing. Anything else is kept, labelled with the reason, and never charted as change. The band on the drift chart is the range of this athlete's own compared captures, not a population norm. When the film is too occluded, too far or too dark to measure, the report says so and names the angle to film next time, rather than guessing.</p>
       <h3>Where we stop</h3>
-      <p>Couro does not predict injury and does not diagnose. It measures how an athlete moves and flags change against that athlete's own baseline, in plain language, for a qualified person to read. The knee alignment numbers on the scoreboard are shown as reported, as a review flag for a person to read. Couro's joint angles are validated against marker-based motion capture (the table in beat 03); frontal-plane knee is the next measurement we add to that set, with Cal's lab.</p>
+      <p>Couro does not predict injury and does not diagnose. It measures how an athlete moves and flags change against that athlete's own baseline, in plain language, for a qualified person to read. The knee alignment numbers on the scoreboard are shown as reported, as a review flag for a person to read. Couro's joint angles are scored against marker-based motion capture, slot by slot (the grid in beat 03); frontal-plane knee is the next measurement we add to that set, with Cal's lab.</p>
     </div>
   </details>
 </div></section>
@@ -1102,7 +1111,7 @@ window.VALID = [
   $$('#rtsSpeed button').forEach(b => b.onclick = () => { $$('#rtsSpeed button').forEach(x => x.classList.remove('on')); b.classList.add('on'); rts.playbackRate = +b.dataset.r; });
   const tryPlay = v => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
   tryPlay(rts); rts.addEventListener('canplay', () => { if (rts.paused && $('#rtsPlay').textContent === 'Pause') tryPlay(rts); }, { once: true });
-  ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(ev => window.addEventListener(ev, () => { if (rts.paused && $('#rtsPlay').textContent === 'Pause') tryPlay(rts); if (sv.paused) tryPlay(sv); }, { passive: true }));
+  ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(ev => window.addEventListener(ev, () => { if (rts.paused && $('#rtsPlay').textContent === 'Pause') tryPlay(rts); if (sv.paused) tryPlay(sv); const a = $('#rvRef'); if (a && a.paused && $('#pairPlay').textContent === 'Pause both') { tryPlay(a); } }, { passive: true }));
   $('#evBtn').onclick = () => { const ev = $('#evidence'); const on = ev.style.display !== 'none'; ev.style.display = on ? 'none' : 'block'; $('#evBtn').textContent = on ? 'See the frames and the report' : 'Hide the frames and the report'; if (!on) ev.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); };
 
   /* ================= DRIFT: small multiples ================= */
@@ -1219,10 +1228,55 @@ window.VALID = [
 
   /* ================= SYNTHESIS: the drift moment ================= */
   const MOM = S.moment, MOMi = rows.findIndex(r => r.id === MOM.id);
-  const rvRef = $('#rvRef'), rvSel = $('#rvSel');
+  const rvRef = $('#rvRef'), rvSel = $('#rvSel'), pScrub = $('#pairScrub'), pPlay = $('#pairPlay');
   const srcOf = c => c.crop || (c.src ? c.src : 'data:video/mp4;base64,' + c.mp4);
-  const refC = SEASON[rows.indexOf(REF)]; rvRef.src = srcOf(refC); rvRef.playbackRate = 0.5; rvRef.onloadedmetadata = () => { rvRef.currentTime = rvRef.duration * 0.35; tryPlay(rvRef); };
-  rvSel.playbackRate = 0.5;
+  const refC = SEASON[rows.indexOf(REF)]; rvRef.src = srcOf(refC);
+  let pairRate = 0.5, pairOn = true; rvRef.playbackRate = pairRate;
+  // One clock: the reference is the master. The selected film follows at the same NORMALISED position
+  // (fraction of its own clip), so a 2.6 s clip and a 1.3 s clip stay phase-aligned start to end.
+  function follow() {
+    if (rvRef.duration && rvSel.duration) {
+      const f = rvRef.currentTime / rvRef.duration, want = f * rvSel.duration;
+      // Both films play. The follower's rate is scaled by the duration ratio so equal fractions elapse together;
+      // any residual drift beyond a frame is snapped back to the master's position.
+      const rate = pairRate * (rvSel.duration / rvRef.duration);
+      if (Math.abs(rvSel.playbackRate - rate) > 1e-3) rvSel.playbackRate = Math.max(0.0625, Math.min(16, rate));
+      if (rvRef.paused !== rvSel.paused) { rvRef.paused ? rvSel.pause() : tryPlay(rvSel); }
+      if (Math.abs(rvSel.currentTime - want) > 1 / 30 && !rvSel.seeking) rvSel.currentTime = want;
+      pScrub.value = Math.round(f * 1000); $('#rvRefT').textContent = rvRef.currentTime.toFixed(2) + ' s';
+      drawPairData(f);
+    }
+    requestAnimationFrame(follow);
+  }
+  requestAnimationFrame(follow);
+  const pairPlayBoth = () => { tryPlay(rvRef); tryPlay(rvSel); pairOn = true; pPlay.textContent = 'Pause both'; };
+  const pairPause = () => { rvRef.pause(); rvSel.pause(); pairOn = false; pPlay.textContent = 'Play both'; };
+  pPlay.onclick = () => pairOn ? pairPause() : pairPlayBoth();
+  pScrub.addEventListener('input', () => { if (rvRef.duration) { pairPause(); rvRef.currentTime = pScrub.value / 1000 * rvRef.duration; } });
+  $('#pairStepB').onclick = () => { pairPause(); rvRef.currentTime = Math.max(0, rvRef.currentTime - 1 / 30); };
+  $('#pairStepF').onclick = () => { pairPause(); rvRef.currentTime = Math.min(rvRef.duration || 0, rvRef.currentTime + 1 / 30); };
+  $$('#pairSpeed button').forEach(b => b.onclick = () => { $$('#pairSpeed button').forEach(x => x.classList.remove('on')); b.classList.add('on'); pairRate = +b.dataset.r; rvRef.playbackRate = pairRate; });
+  rvRef.onloadedmetadata = () => { rvRef.currentTime = 0; if (pairOn) pairPlayBoth(); };
+  // COUPLED DATA STRIP under the films: the per-session numbers drawn as two bars that fill as the clips play,
+  // so the number and the film are read together. Values are per-session averages (the export has no per-frame series).
+  const pd = $('#pairData'), pg = pd.getContext('2d');
+  function drawPairData(f) {
+    const r = rows[sel], W = pd.width, H = pd.height; pg.clearRect(0, 0, W, H); pg.fillStyle = '#fff'; pg.fillRect(0, 0, W, H);
+    const ITEMS = [['GROUND CONTACT', 'contact_time', 's', 2, 0.3], ['VELOCITY', 'velocity', 'm/s', 2, 11], ['VERTICAL STIFFNESS', 'stiffness', 'kN/m', 1, 70]];
+    const colW = (W - 40) / ITEMS.length;
+    ITEMS.forEach(([lab, key, unit, dec, max], k) => {
+      const x0 = 20 + k * colW, bw = colW - 30, a = valid(REF, key) ? REF[key] : null, b = (r.set === 'A' && valid(r, key)) ? r[key] : null;
+      pg.fillStyle = INK3; font(pg, 600, 12); pg.textAlign = 'left'; pg.fillText(lab + '  \u00b7  ' + unit, x0, 20);
+      [[a, 38, INK2, 'REF'], [b, 82, CAL, r.date.toUpperCase()]].forEach(([v, y, col, tag]) => {
+        pg.fillStyle = '#F4EEDF'; pg.fillRect(x0, y, bw, 26);
+        if (v != null) { pg.fillStyle = col; pg.fillRect(x0, y, bw * Math.min(1, v / max) * Math.min(1, f * 1.15 + 0.05), 26); pg.fillStyle = '#fff'; font(pg, 700, 15); pg.fillText(v.toFixed(dec), x0 + 8, y + 18); }
+        else { pg.fillStyle = INK3; font(pg, 500, 12, mono); pg.fillText(r.set === 'A' ? 'not exported' : 'kept, not compared', x0 + 8, y + 18); }
+        pg.fillStyle = col; font(pg, 600, 11); pg.textAlign = 'right'; pg.fillText(tag, x0 + bw, y - 4); pg.textAlign = 'left';
+      });
+      if (a != null && b != null) { const d = b - a; pg.fillStyle = GOLD3; font(pg, 700, 15); pg.textAlign = 'right'; pg.fillText((d > 0 ? '+' : '') + d.toFixed(dec) + ' ' + unit, x0 + bw, 135); pg.textAlign = 'left'; }
+    });
+    pg.fillStyle = INK3; font(pg, 500, 11, mono); pg.textAlign = 'left'; pg.fillText('session averages from the export, drawn with the film \u00b7 change, not a verdict', 20, 135);
+  }
   const RV = [['Velocity', 'velocity', 'm/s', 2], ['Ground contact', 'contact_time', 's', 2], ['Left contact', 'contact_l', 's', 2], ['Right contact', 'contact_r', 's', 2], ['Vertical stiffness', 'stiffness', 'kN/m', 1]];
   const mc = $('#moment'), mg = mc.getContext('2d'); let momP = 0;
   function drawMoment(i) {
@@ -1247,7 +1301,7 @@ window.VALID = [
   }
   function updateReview(i) {
     const r = rows[i], c = SEASON[i], isA = r.set === 'A';
-    rvSel.src = srcOf(c); rvSel.load(); rvSel.onloadedmetadata = () => { if (rvSel.duration > 3) rvSel.currentTime = rvSel.duration * 0.35; tryPlay(rvSel); };
+    rvSel.src = srcOf(c); rvSel.load(); rvSel.onloadedmetadata = () => { rvRef.currentTime = 0; rvSel.currentTime = 0; if (pairOn) pairPlayBoth(); };
     rvSel.style.transform = (!c.crop && ['camvan12', 'camvan3', 'camvan4', 'camvan5', 'camvan6', 'camvan7', 'camvan9'].includes(c.id)) ? 'scale(2.2)' : 'none'; rvSel.style.transformOrigin = '52% 68%';
     $('#rvSelTag').textContent = (i === MOMi ? 'Drift moment' : isA ? 'Compared' : 'Kept') + ' \u00b7 ' + c.date; $('#rvSelSet').textContent = isA ? 'compared' : 'not compared';
     $('#rvHead').textContent = i === MOMi ? 'Ground contact shortened ' + Math.abs(MOM.pct) + '% while velocity rose.' : isA ? 'Reference against ' + c.date + '.' : 'Kept capture: filmed differently, so no comparison is drawn.';
@@ -1371,7 +1425,7 @@ window.VALID = [
   })();
 
 
-  /* ================= VALIDATION HEATMAP (consolidated v49, source of truth) ================= */
+  /* ================= LAB AGREEMENT HEATMAP (consolidated v49, source of truth) ================= */
   (function () {
     const c = $('#valid'); if (!c || !window.VALID) return; const g = c.getContext('2d'), W = c.width, H = c.height;
     const METR = [['knee_angle_r', 'Knee flexion'], ['hip_flexion_r', 'Hip flexion'], ['hip_adduction_r', 'Hip adduction (frontal)'], ['lumbar_extension', 'Lumbar extension'], ['ankle_angle_r', 'Ankle angle']];
@@ -1400,21 +1454,21 @@ window.VALID = [
       });
       const ly = H - 22; font(g, 500, 13, mono); g.textAlign = 'left';
       [[CAL, 'Tier 1'], ['#4F73A3', 'Good'], [CAL2, 'Moderate'], ['#fff', 'Poor']].forEach(([col, lab], k) => { const x = 30 + k * 150; g.fillStyle = col; g.fillRect(x, ly - 12, 22, 14); g.strokeStyle = LINE; g.strokeRect(x, ly - 12, 22, 14); g.fillStyle = INK2; g.fillText(lab, x + 30, ly); });
-      g.fillStyle = INK3; g.textAlign = 'right'; g.fillText('real single-phone footage \u00b7 LOSO cross-validation \u00b7 right-side joints scored', W - 30, 58);
+      g.fillStyle = INK3; g.textAlign = 'right'; g.fillText('real single-phone footage \u00b7 leave-one-subject-out \u00b7 right-side joints scored', W - 30, 58);
     }
     onceVisible(c, () => anim(2200, q => { p = q; draw(); })); draw();
   })();
 
   /* ================= tour ================= */
   const TOUR = [
-    { el: '#board', t: 'The read', b: 'Left knee is the surgical side. Same rep at full speed looks fine. At stance: 4\u00b0 left, 10.3\u00b0 right, a 6.3\u00b0 gap between sides, flagged for a person to read. Couro\u2019s angles are validated against marker-based motion capture (beat 03). The trainer decides.' },
+    { el: '#board', t: 'The read', b: 'Left knee is the surgical side. Same rep at full speed looks fine. At stance: 4\u00b0 left, 10.3\u00b0 right, a 6.3\u00b0 gap between sides, flagged for a person to read. Couro\u2019s angles are scored against marker-based motion capture, slot by slot (beat 03). The trainer decides.' },
     { el: '#review', t: '01 \u00b7 The drift moment', b: 'Couro reads every capture against the athlete\u2019s own reference and surfaces the one that moved most: 10 April, ground contact 43% shorter than January with velocity up. Reference film left, the moment right. Change, not a verdict.' },
     { el: '#multi', t: '01 \u00b7 Drift, six metrics', b: 'A whole season on one phone. Blue = compared against his own band; grey = filmed differently, kept, not charted. Click any point to play that capture.' },
     { el: '#radar', t: '01 \u00b7 Profile vs reference', b: 'Dashed is January. Blue is the selected capture. Axes are scaled to his own compared range, not a roster norm.' },
     { el: '#asym', t: '01 \u00b7 Left vs right', b: 'Every capture, left up and right down. The kind of asymmetry the trainer is watching after surgery, on a season of ordinary film.' },
     { el: '#race', t: '02 \u00b7 Fast', b: 'Five manual handoffs today. Proposed: capture, trainer review, same-day report. The trainer still reviews every flag; same-day is the Day 30 commitment.' },
     { el: '#roster', t: '03 \u00b7 The team view', b: 'Every athlete on one board, sorted by what needs a look: drift, left/right, due, new. Coaches see their team, trainers their athletes. Rows are illustrative except the real one. Click it: it opens the same film view.' },
-    { el: '#valid', t: '03 \u00b7 Validated, angle by angle', b: '23 measurement-and-camera slots scored against a marker-based lab on real phone footage. 14 pass the standard bar, 10 at Tier 1. Read it as a capture guide: side view for knee, hip and trunk; front-oblique for hip adduction.' },
+    { el: '#valid', t: '03 \u00b7 Agreement with motion capture, angle by angle', b: '23 measurement-and-camera slots scored against a marker-based lab on real phone footage. 14 pass the standard bar, 10 at Tier 1. Read it as a capture guide: side view for knee, hip and trunk; front-oblique for hip adduction.' },
     { el: '#floor', t: '03 \u00b7 Raise the floor', b: 'Drag the day. Illustrative targets: a reference capture for every athlete by day 30, a test of agreement between trainers by day 60, drift against own baseline by day 90.' },
     { el: '#b4 .steps', t: '04 \u00b7 Today', b: 'Which program joins football, a staff lead and a baseline window, a lab contact and date range, an intro to IT and procurement.' }
   ];
